@@ -3,7 +3,7 @@
         SYSTEM "https://resources.jetbrains.com/writerside/1.0/product-profile.dtd">
 
 <instance-profile id="hi"
-                 name="TDD & Refactoring"
+                 name="TDD and Refactoring"
                  start-page="Default-topic.md">
 
     <toc-element topic="Default-topic.md"/>
