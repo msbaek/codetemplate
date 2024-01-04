@@ -77,7 +77,8 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      url: ${{ "https://msbaek.github.io/codetemplate" }}
+#      url: ${{ steps.deployment.outputs.page_url }}
     # Requires the build job results
 #    needs: test
     needs: build
