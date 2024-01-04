@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rules SYSTEM "https://resources.jetbrains.com/writerside/1.0/redirection-rules.dtd">
+<rules>
+    <!-- format is as follows
+    <rule id="<unique id>">
+        <accepts>page.html</accepts>
+    </rule>
+    -->
+    <rule id="733adb0">
+        <description>Created after removal of "Custom JPA Repository" from Help Instance</description>
+        <accepts>Custom-JPA-Repository.html</accepts>
+    </rule>
+    <rule id="5d98ab78">
+        <description><![CDATA[Created after removal of "0 Inbox" from TDD & Refactoring]]></description>
+        <accepts>0-Inbox.html</accepts>
+    </rule>
+    <rule id="31c9ad35">
+        <description><![CDATA[Created after removal of "Techniques" from TDD & Refactoring]]></description>
+        <accepts>Techniques.html</accepts>
+    </rule>
+    <rule id="1ffe4571">
+        <description><![CDATA[Created after removal of "Cases" from TDD & Refactoring]]></description>
+        <accepts>Cases.html</accepts>
+    </rule>
+    <rule id="619a0cad">
+        <description><![CDATA[Created after removal of "TODO" from TDD & Refactoring]]></description>
+        <accepts>TODO.html</accepts>
+    </rule>
+    <rule id="b2ddc70">
+        <description><![CDATA[Created after removal of "Agile" from TDD & Refactoring]]></description>
+        <accepts>Agile.html</accepts>
+    </rule>
+    <rule id="59debb9a">
+        <description><![CDATA[Created after removal of "Patterns" from TDD & Refactoring]]></description>
+        <accepts>Patterns.html</accepts>
+    </rule>
+    <rule id="2a40a369">
+        <description><![CDATA[Created after removal of "Domain Service" from TDD & Refactoring]]></description>
+        <accepts>Domain-Service.html</accepts>
+    </rule>
+    <rule id="57376570">
+        <description><![CDATA[Created after removal of "Astronvim" from TDD & Refactoring]]></description>
+        <accepts>Astronvim.html</accepts>
+    </rule>
+</rules>
