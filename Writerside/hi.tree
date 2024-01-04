@@ -8,6 +8,7 @@
 
     <toc-element topic="Default-topic.md"/>
     <toc-element topic="Refactoring.md">
+        <toc-element topic="Code-Review.md"/>
     </toc-element>
     <toc-element topic="TDD.md"/>
     <toc-element topic="DDD.md">
