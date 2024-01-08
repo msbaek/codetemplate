@@ -23,6 +23,7 @@
     </toc-element>
     <toc-element topic="Tools.md">
     </toc-element>
+    <toc-element topic="Books.md"/>
     <toc-element topic="Articles.md">
         <toc-element topic="Modulith.md">
             <toc-element topic="Spring-Modulith-with-DDD.md"/>
@@ -30,4 +31,5 @@
         <toc-element topic="Writerside.md"/>
     </toc-element>
     <toc-element topic="Terms.md"/>
+    <toc-element topic="Etc.md"/>
 </instance-profile>

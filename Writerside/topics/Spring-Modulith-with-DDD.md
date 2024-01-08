@@ -2,56 +2,49 @@
 
 ## Building Modular Monolith Applications with Spring Boot and Domain Driven Design
 
-- https://github.com/xsreality/spring-modulith-with-ddd/tree/part-1-ddd-solution
 - https://itnext.io/building-modular-monolith-applications-with-spring-boot-and-domain-driven-design-d3299b300850
+- https://github.com/xsreality/spring-modulith-with-ddd/tree/part-1-ddd-solution
 
-### Writing Modular Code의 목표
+### 모듈
 
-- Application is organized into modules. Each module solves a distinct part of the business problem.
-- Modules are loosely coupled. No cyclic dependencies
-- Complete application is deployed as a single unit at runtime
-- Module’s public interface (behaviour exposed to other modules) is flexible and can be changed atomically.
-    - Unlike microservices, when we need to change a module’s public interface, other modules consuming the interface
-      can be changed and rolled out together.
+- 애플리케이션은 모듈로 구성됨. 각 모듈은 비즈니스 문제의 특정 부분을 해결함
+- 모듈은 느슨하게 결합되고, 순환 의존성이 없음
+- 모듈의 퍼블릭 인터페이스(다른 모듈에 노출되는 행위)는 유연하고 원자적으로 변경될 수 있음
+    - 마이크로서비스와 달리 모듈의 퍼블릭 인터페이스를 변경해야 할 때 해당 인터페이스를 사용하는 다른 모듈들도 함께 변경되고 배포할 수 있음
+- “높은 응집도, 낮은 결합도"
+    - “함께 변경되는 것은 함께 유지되어야 함"
+- 모듈의 경계를 패키지로 하는 경우 Controller, Service, Repository는 같은 패키지에 있어야 함
+    - 새로운 기능(aka package-by-feature)을 빌드할 때 항상 함께 변경해야 하기 때문
+- 계층별 패키징은 정의상 응집도가 낮으므로 모듈화되지 않음
+- from [“Structured Design”](https://www.amazon.com/Structured-Design-Fundamentals-Discipline-Computer/dp/0138544719)
 
-### What is a Module?
+### 모듈 식별하기
 
-- “High cohesion, low coupling”
-    - “Things that change together should stay together”
-- Controller, Service, Repository etc of a thing should be in the same package (if package is used for module boundary)
-  as they always need to change together when building a new feature aka package-by-feature.
-- Packaging by layers (packages like controllers, models, repositories etc) are by definition low in cohesion and would
-  not be modular.0
-- This definition comes from the book “Structured Design”.
+- 바운더리 식별은 여전히 중요
+- 어떻게 바운더리 경계를 식별하나 ?
+    - 경험 상, DDD의 패턴은 이 문제를 해결하는 가장 좋은 도구임
 
-### Identifying Modules
+### A Business Problem - "도서관, 도서 대여 프로세스"
 
-- identification of boundaries is still important
-- How do we identify the module boundaries? In my experience, the patterns of Domain Driven Design are one of the best
-  tools to solve this problem.
+#### 요구사항:
 
-### A Business Problem
+- 책은 바코드로 식별됨
+- 원하는 책이 존재하는 경우 대여를 할 수 있음
+    - 고객은 책을 찾고 대여 데스크에 가서 대여함
+- 책을 반납하기 위해서는 고객은 순환 데스크로 가거나, 드롭 존에 책을 놓아두면 됨
 
-- ex. library and book borrowing process
-- requirements:
-    - The library consists of thousands of books. There can be multiple copies of the same book.
-    - Before being included in the library, every book receives a barcode stamped at the back or one of the end pages.
-      This barcode number uniquely identifies the book.
-    - A patron of the library can check out a book if it is available. Usually the patron locates the book in the
-      library and goes to the circulation desk to check out. Sometimes the patron can directly go to the desk and ask
-      for a book by title.
-    - The book is checked out for a fixed period of 2 weeks.
-    - To check in the book, the patron can go to the circulation desk or drop it in the drop zone.
-- Let’s break down this library domain
-  into [subdomains](https://stackoverflow.com/questions/73077578/what-actually-is-a-subdomain-in-domain-driven-design)
-    - "process of checking out (borrowing) a book"
-    - "inventory of books"
+#### 도서관 도메인을 [서브 도메인](https://stackoverflow.com/questions/73077578/what-actually-is-a-subdomain-in-domain-driven-design)으로 나누기
+
+- "책을 대여하는 프로세스"
+- "도서의 재고"
 
 ### Building the Solution
 
-- solve the problem of the subdomain by designing
-  a [Bounded Context](https://martinfowler.com/bliki/BoundedContext.html)
-    - bounded contexts are also the modules in our Modular Monolith application.
+#### 2개의 [Bounded Context](https://martinfowler.com/bliki/BoundedContext.html)
+
+- Borrow, Inventory 바운디드 컨텍스트를 설계하여 서브 도메인 문제를 해결함
+    - **바운디드 컨텍스트는 모듈러 모놀리스 애플리케이션의 모듈**이↓기도 함
+    - `(+)`가 있는 클래스만 public, 나머지는 package private
   ```
   src/main/java
   └── example
@@ -72,11 +65,14 @@
           └── BookRepository
   ```
 
-### inventory bounded context
+### Inventory 바운디드 컨텍스트
 
-- with the help of [Aggregate Pattern](https://martinfowler.com/bliki/DDD_Aggregate.html)
+- [Aggregate Pattern](https://martinfowler.com/bliki/DDD_Aggregate.html)을 활용해서 Inventory 바운디드 컨텍스트를 설계
 - ![inventory-bounded-context.png](../images/inventory-bounded-context.png)
--
+
+#### 구현
+
+- Entity
 
 ```Java 
 @Entity
@@ -154,7 +150,7 @@ interface BookRepository extends JpaRepository<Book, Long> {
 }
 ```
 
-- BookmanagementService
+- Bookmanagement Service
 
 ```Java
 @Transactional
@@ -211,12 +207,10 @@ public class BookManagement {
 ``` 
 
 - 주목할 사항
-    - BookManagement service returns DTO instead of the Book entity
-        - By returning only DTOs at the service layer, we protect the domain model (entity) to leak out to the
-          Controller and presentation layers.
-        - for small projects this may seem overkill, but for reasonably large projects, your future self will thank you
-          for restricting the domain within the Service layer.
-    - BookManagement(Public API) is the only class accessible by other modules apart from the DTO
+    - BookManagement Service는 Book 엔터티 대신 [DTO](Terms.md#dto)를 반환함
+        - 서비스 계층에서 DTO만 반환함으로써, 도메인 모델(엔터티)가 컨트롤러나 프리젠테이션 계층으로 누출되지 않도로 보호함
+    - BookManagement(퍼블릭 API)넌 DTO를 제외하고는 다른 모듈에서 접근 가능한 유일한 클래스임
+
 - REST API for clients
 
 ```Java
@@ -255,15 +249,16 @@ class BookController {
 }
 ```      
 
-- With the Inventory bounded context, we have fulfilled the first two requirements listed earlier. The remaining
-  requirements will be met with the Borrow Bounded context.
-- [source in github](https://github.com/xsreality/spring-modulith-with-ddd/blob/part-1-ddd-solution)
-- The Author is not turned into another entity because we do not have any business requirements around it
+- Inventory 바운디드 컨텍스트를 처음 2가지 요구사항을 완료했음
+- 나머지 2개의 요구사항은 Borrow 바운디드 컨텍스트에 의해 구현됨
 
-### borrow bounded context
+### Borrow 바운디드 컨텍스트
 
 - ![loan-bounded-context.png](../images/loan-bounded-context.png)
-- loan : long lasting entity
+
+#### Loan 엔터티
+
+- 오래 지속되는 엔터티임
 
 ```Java
 @Entity
@@ -328,11 +323,19 @@ public class Loan {
 
 - 주목할 사항
     - book entity에 대한 foreign key 참조가 없음
-    - 대신 Book을 barcode만 갖는 value object로 모델링
-    - 메모리 참조 → repository룰 통한 참조(id)
-    - no JPA Many-to-One relation modeled between Loan and Book. It is intuitively defined in the domain model and
-      enforced by the aggregate invariants.
-- LoanManagement service
+    - 대신 Book을 barcode만 갖는 value object로 모델링(`@Embedded`)
+        ```Java
+        @Embedded
+        @AttributeOverride(name = "barcode", column = @Column(name = "book_barcode"))
+        private Book book;
+        // ...
+        public record Book(String barcode) {
+        }
+        ```
+        - `메모리 참조` → `repository룰 통한 참조(id)`
+    - Loan과 Book 사이에는 ManyToOne JPA 관계가 없음
+
+#### LoanManagement Service
 
 ```Java
 @Transactional
@@ -372,25 +375,28 @@ public class LoanManagement {
 ```
 
 - 주목할 점
-    - First, LoanManagement service depends on BookManagement service
-    - Secondly, the implementation of checkout and checkin do not perform any invariants check at all.
-        - They simply call the methods on the Loan aggregate or the BookManagement service which then perform the
-          invariants check.
-        - This results in a very clear and easy to understand implementation of the LoanManagement service.
-    - Finally, similar to BookManagement, this service returns Loan DTO only and not the entity itself.
+    1. **LoanManagement 서비스가 BookManagement 서비스에 의존함**
+    2. checkout, checkin의 구현이 어떠한 불변식 조사도 하지 않음
+        - 단순히 Loan 애그리것이나 Bookmanagement 서버스로 **위임**(호출)만 하고, 이후에 불변식 조사가 일어남
+        - 결과적으로 매우 명확하고, 이해하기 쉬운 LoanManagement 서비스가 구현됨
+    3. BookManagement 처럼 서비스는 엔터티 대신 DTO를 반환함
 
-### few things that can be improved.
+### 몇가지 개선할 사항
 
-- Tight Coupling between Bounded Contexts
-    - borrow BC가 inventory BC와 긴밀하게 연결. inventory가 불용할 때 borrow도 작동 불가
-    - 결제 요청은 단일 txn에서 2개의 aggregate를 갱신함. 하나의 txn은 하나의 aggregate를 갱신해야 함
-- Independent Testing of Bounded Contexts
-    - 통합 테스트
+- 바운디드 컨텍스트간 **강결합**
+    - **Borrow 바운디드 컨텍스트와 Inventory 바운디드 컨텍스트가 강결합됨**
+        - Inventory 바운디드 컨텍스트가 사용이 불가할 때 Borrow 바운디드 컨텍스트도 작동 불가
+    - 결제 요청은 단일 txn에서 2개의 aggregate를 갱신함
+        - **하나의 txn은 하나의 aggregate를 갱신해야 함**
+- 바운디드 컨텍스트간의 **독립적인 테스트 불가**
+    - Borrow 바운디드 컨텍스트를 테스트하려면 의존성이 있는 바운디드 컨텍스트인 Inventory도 처리해야 함
+    - checkout에 대한 테스트는 대여된 도서의 상태가 `ISSUED`로 갱신되었는지 확인해야 함
+    - BookManagement 서비스를 Mocking하거나 DI하지 않도고 테스트할 수 있으면 좋을 것임
   ```Java
   @Transactional
   @SpringBootTest
   class LoanManagementIT {
-      @Autowired LoanManagement loans;
+      @Autowired LoanManagement loan;
       @Autowired BookManagement books;
 
       @Test
@@ -409,52 +415,67 @@ public class LoanManagement {
       }
   }
   ```
-- Controlling the Interface of Bounded contexts
+- **바운디드 컨텍스트 간의 인터페이스 제어**
+    - 각 바운디드 컨텍스트는 다른 바운디드 컨텍스트에서 사용할 수 있는 특정 클래스만 노출(DTO 및 서비스 클래스)
+    - 이들은 바운디드 컨텍스트의 인터페이스 역할을 함
+    - 이를 위해서는 신중하고 지속적인 주의가 필요함
 
 ## Improving Modular Monolith Applications with Spring Modulith
 
 - https://itnext.io/improving-modular-monolith-applications-with-spring-modulith-edecc787f63c
-- https://github.com/xsreality/spring-modulith-with-ddd/tree/part-2-spring-modulith
 
-### New Business Requirements
+### 새로운 비즈니스 요구사항
 
-- 고객의 도서 대출을 요청하면 바로 issued(발급됨) 상태가 됨
+- 고객이 도서 대여를 요청하면 바로 issued(대여됨) 상태가 됨
 - 하지만 고객의 실제로 수령했는지 알 수 없음
 - 따라서 보류됨(hold) 상태 추가가 필요해짐
 
-### Rethinking the Domain Model
+### 도메인 모델을 다시 생각하기
 
-- 기존의 서브도메인
+#### 기존의 서브도메인
+
 - ![existing-subdomains.png](../images/existing-subdomains.png)
 - 기존의 동기식 강결합(tightly coupling)을 비동기식 약결합(loosely coupling)으로 변경하고자 함
-- new-subdomain-emerges
-- ![new-subdomain-emerges.png](../images/new-subdomain-emerges.png)
-- Catalog 서브도메인은 책의 가용여부에 대한 걱정 없이 책의 메타데이터를 표현함
-- 도메인 이벤트를 이용해서 의존성 개선
-    - Borrow BC는 BookCheckoutRequested 이벤트를 발생
-    - Inventory BC는 해당 이벤트를 수신하면 책이 가용한지 확인하고 BookAvailable나 BookUnavailable 이벤트 발생
-    - Borrow BC는 Inventory BC가 발생시킨 이벤트에 따라 대출 상태를 갱신(ACTIVE or REJECTED)
+    - 강결합: 고객의 책을 대여하면 Inventory의 책 상태는 동기식으로 대여됨으로 변경됨
 
-### Two Subdomains, one Bounded context?
+#### 드러나는 새로운 서브도메인
+
+- Inventory 서브 도메인은 도서관에서 대여 가능한 모든 책을 추적하는 역할도 담당
+    - 즉 도서관의 모든 카탈로그를 관리하여 도서가 대여되고, 반납될 때 변경되는 대영 가능 여부를 추적함
+- 실제로 2개의 서브 도메인이 하나로 모델링된 경우 어떻게 해야 할까 ?
+
+- ![new-subdomain-emerges.png](../images/new-subdomain-emerges.png)
+- Catalog 서브도메인은 Inventory 서브 도메인이 담당할 가용성에 대한 걱정 없이 책의 메타데이터를 캡쳐하는 역할을 담당함
+- 바운드 컨텍스트도 3개가 있어야 할까 ?
+    - Borrow 및 Inventory 바인딩된 컨텍스트는 여전히 동일한 의존성을 공유
+    - 도메인 이벤트를 사용하여 최종적인 일관성(eventual consistency)을 가진 의존성을 모델링하면 어떨까?
+- **도메인 이벤트**를 이용해서 의존성 개선
+    - Borrow 바운디드 컨텍스트: **BookCheckoutRequested** 이벤트를 발생
+    - Inventory 바운디드 컨텍스트: 해당 이벤트를 수신하면 책이 가용한지 확인하고 **BookAvailable**나 **BookUnavailable** 이벤트 발생
+    - Borrow 바운디드 컨텍스트: Inventory 바운디드 컨텍스트가 발생시킨 이벤트에 따라 대여 상태를 갱신(**ACTIVE or REJECTED**)
+
+![domain-event-processing](../images/domain-event-processing)
+
+### 2개의 서브도메인, 하나의 바운디드 컨텍스트
 
 - ![multiple-domains-in-one-bc.png](../images/multiple-domains-in-one-bc.png)
-- BC는 언어적 경계(linguistic boundary)임
-- 모델의 의미는 BC 내에서 변하지 않음
-- 대여와 인벤토리에서 도서의 의미는 동일함
-- Inventory BC에서 도서의 가장 중요한 속성은 사용 가능 상태임
-- Borrow BC에서 책을 빌리고 반납할 때 책의 사용 가능 상태가 영향을 받음
-- 도서라는 모델은 두 BC 간에 동일함
-- When a new book is added to the library (catalog), Borrow BC must know about it to keep the inventory updated. We can
-  model this with events as below:
-    - The Catalog BC generates BookAddedToCatalog event which is consumed by Borrow BC to update its local inventory to
-      indicate a new book is available for borrowing.
-    - The Catalog and Borrow BC are loosely coupled when communicating asynchronously via events because the process of
-      borrowing a book is no longer dependent on the Catalog.
+- 바운디드 컨텍스트는 언어적 경계(linguistic boundary)임
+    - 모델의 의미는 바운디드 컨텍스트 내에서 변하지 않음
+    - Borrow와 Inventory에서 도서의 의미는 동일함
+    - Inventory 바운디드 컨텍스트에서 도서의 가장 중요한 속성은 사용 가능 상태임
+    - Borrow 바운디드 컨텍스트에서 책을 빌리고 반납할 때 책의 사용 가능 상태가 영향을 받음
+    - 도서라는 모델은 두 바운디드 컨텍스트 간에 동일함
+- 도서관(카탈로그)에 새 책이 추가되면 Borrow 바운디드 컨텍스트는 Inventory를 갱신하기 위해 이 사실을 알아야 함
+- 이 이벤트를 다음과 같이 모델링 할 수 있음
+    - Catalog 바운디드 컨텍스트
+      - Borrow 바운디드 컨텍스트에 의해 소비되는 BookAddedToCatalog 이벤트를 발생시킴
+      - Borrow 바운디드 컨텍스트는 지역 재고(local inventory)를 갱신하여 새로운 책을 대여할 수 있음을 나타냄
+    - 이벤트를 통해 비동기적으로 통신할 때 대여 프로세스가 더이상 카탈로그에 의존하기 않아서 Catalog 바운디드 컨텍스트와 Borrow 바운디드 컨텍스트는 느슨하게 결합됨
 
-### The Borrow Bounded Context (with new Insights)
+### Borrow 바운디드 컨텍스트(with new Insights)
 
 - ![eventual-consistency-btw-loan-book.png](../images/eventual-consistency-btw-loan-book.png)
-- LoanManagement service fires the events as the use cases are executed
+- LoanManagement 서비스가 유스케이스가 실행됨에 따라 이벤트를 발생시킴
 
 ```Java
 @Transactional
@@ -496,7 +517,7 @@ public record BookPlacedOnHold(Long bookId,
 }
 ```
 
-- InventoryManagement service listens to the event and marks the book as on hold
+- InventoryManagement 서비스는 이벤트를 리슨하고 책을 보류(hold) 상태로 만듦
 
 ```Java
 @Transactional
@@ -515,24 +536,23 @@ public class InventoryManagement {
 }
 ```
 
-- Notice the annotation @ApplicationModuleListener
-    - = @TransactionalEventListener, @Async, @Transactional(propagation = Propagation.REQUIRES_NEW)
-    - ensures that the event listener method is executed in a different thread and in a separate transaction.
-        - The code triggering the event is always completed irrespective of the listener.
+- `@ApplicationModuleListener`에 주의하라
+    - `@TransactionalEventListener, @Async, @Transactional(propagation = Propagation.REQUIRES_NEW)`
+    - 별도의 트랜잭션에서 별도의 쓰레드로 이벤트 리스터가 동작하도록 함
+    - 리스너와 무관하게 이벤트를 트리거링하는 코드는 항상 완료됨
 - 새로운 이슈
     - 이벤트를 트리거한 코드이 이미 완료된 상태에서 리스너 실행이 실패되면...
 
 ### Spring Modulith Event Publication Registry
 
-- spring-modulith-starter-core, spring-modulith-starter-jpa 의존성 사용
-    - spring-modulith-starter-jpa dependency enables the Event Publication Registry
-        - It creates a table EVENT_PUBLICATION
-            - ID, COMPLETION_DATE, EVENT_TYPE, LISTENER_ID, PUBLICATION_DATE, SERIALIZED_EVENT
-    - COMPLETION_DATE를 이용해서 리스너 실행이 실패하면 이벤트가 손실되지 않고 리스터 실행이 성공할 때까지 다시 트리거됨
+- **spring-modulith-starter-core, spring-modulith-starter-jpa** 의존성 사용
+    - spring-modulith-starter-jpa 의존성은 이벤트 발행 레지스트리를 활성화함
+        - **EVENT_PUBLICATION 테이블**을 생성함(ID, COMPLETION_DATE, EVENT_TYPE, LISTENER_ID, PUBLICATION_DATE, SERIALIZED_EVENT)
+    - COMPLETION_DATE를 이용해서 리스너 실행이 실패하면 이벤트가 손실되지 않고 리스터 실행이 성공할 때까지 다시 트리거됨(application이 재실행될 때 재처리됨)
 
-### Isolated Testing of Modules
+### 격리된 모듈 테스트
 
-- Employing events as communication pattern between the modules facilitates independent testing.
+- 모듈 간이 통신에 이벤트를 도입하여 독립된 테스트가 가능해짐
 
 ```Java
 @Transactional
@@ -558,9 +578,10 @@ class LoanIntegrationTests {
 }
 ```
 
+- `@ApplicationModuleTest`: 모듈을 나타내는 패키지에 대한 스프링 애플리케이션 컨텍스트만 로딩되도록 제한
 - [integration testing with Spring Modulith](https://docs.spring.io/spring-modulith/reference/testing.html)
 
-### Stronger Module boundaries with Spring Modulith
+### 스프링 모듈리스를 통한 더 강한 모듈 경계
 
 - Spring 모듈리스에서는 모든 최상위 패키지가 모듈로 간주
     - API 패키지라고 함
@@ -570,7 +591,7 @@ class LoanIntegrationTests {
 ```
 src/main/java
 └── example
-    ├── borrow <-- API Package(module)
+    ├── borrow ← API Package(module)
     │   ├── book
     │   │   ├── Book
     │   │   ├── BookCollected
@@ -585,7 +606,7 @@ src/main/java
     │       ├── LoanManagement
     │       ├── LoanMapper      
     │       └── LoanRepository      
-    ├── catalog <-- API Package(module)
+    ├── catalog ← API Package(module)
     │   ├── internal
     │   │   ├── BookDto
     │   │   ├── BookMapper
@@ -597,7 +618,7 @@ src/main/java
     └── LibraryApplication
 ```
 
-- The restriction can be enforced with the help of a test as below.
+- 이러한 제약은 아래와 같은 테스트를 통해 강화될 수 있음
 
 ```java
 class SpringModulithTests {
@@ -610,17 +631,16 @@ class SpringModulithTests {
 }
 ```
 
-- If you try to access an internal class of a module
+- 모듈의 내부 클래스에 접근하면 아래와 같은 예외가 발생
 
 ```java
 org.springframework.modulith.core.Violations: - Module 'borrow' depends on non-exposed type example.catalog.internal.BookAddedToCatalog within module 'catalog'!
 BookAddedToCatalog declares parameter BookAddedToCatalog.on(BookAddedToCatalog) in (InventoryManagement.java:0)
 ```
 
-### Documenting Modules
+### 모듈 문서화
 
-- With Spring Modulith, it is possible to generate documentation snippets and C4 diagrams describing the relationships
-  between the modules.
+- 스프링 모듈리스에서는 문서 스니핏과 모듈 간의 관계를 표현하는 C4 다이어그램을 생성할 수 있음
 
 ```Java
 class SpringModulithTests {
@@ -633,6 +653,7 @@ class SpringModulithTests {
 }
 ```
 
+- $PROJECT_ROOT/target/spring-modulith-docs 디렉토리에 산출물이 생성됨
 - C4 diagram of our application modules
 - ![c4-diagram.png](../images/c4-diagram.png)
 - The test also generates documentation snippets for each module (bounded context).
