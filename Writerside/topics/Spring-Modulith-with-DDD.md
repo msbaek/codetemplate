@@ -468,8 +468,8 @@ public class LoanManagement {
 - 도서관(카탈로그)에 새 책이 추가되면 Borrow 바운디드 컨텍스트는 Inventory를 갱신하기 위해 이 사실을 알아야 함
 - 이 이벤트를 다음과 같이 모델링 할 수 있음
     - Catalog 바운디드 컨텍스트
-      - Borrow 바운디드 컨텍스트에 의해 소비되는 BookAddedToCatalog 이벤트를 발생시킴
-      - Borrow 바운디드 컨텍스트는 지역 재고(local inventory)를 갱신하여 새로운 책을 대여할 수 있음을 나타냄
+        - Borrow 바운디드 컨텍스트에 의해 소비되는 BookAddedToCatalog 이벤트를 발생시킴
+        - Borrow 바운디드 컨텍스트는 지역 재고(local inventory)를 갱신하여 새로운 책을 대여할 수 있음을 나타냄
     - 이벤트를 통해 비동기적으로 통신할 때 대여 프로세스가 더이상 카탈로그에 의존하기 않아서 Catalog 바운디드 컨텍스트와 Borrow 바운디드 컨텍스트는 느슨하게 결합됨
 
 ### Borrow 바운디드 컨텍스트(with new Insights)
@@ -547,7 +547,8 @@ public class InventoryManagement {
 
 - **spring-modulith-starter-core, spring-modulith-starter-jpa** 의존성 사용
     - spring-modulith-starter-jpa 의존성은 이벤트 발행 레지스트리를 활성화함
-        - **EVENT_PUBLICATION 테이블**을 생성함(ID, COMPLETION_DATE, EVENT_TYPE, LISTENER_ID, PUBLICATION_DATE, SERIALIZED_EVENT)
+        - **EVENT_PUBLICATION 테이블**을 생성함(ID, COMPLETION_DATE, EVENT_TYPE, LISTENER_ID, PUBLICATION_DATE,
+          SERIALIZED_EVENT)
     - COMPLETION_DATE를 이용해서 리스너 실행이 실패하면 이벤트가 손실되지 않고 리스터 실행이 성공할 때까지 다시 트리거됨(application이 재실행될 때 재처리됨)
 
 ### 격리된 모듈 테스트
@@ -658,3 +659,38 @@ class SpringModulithTests {
 - ![c4-diagram.png](../images/c4-diagram.png)
 - The test also generates documentation snippets for each module (bounded context).
 - ![module-canvas.png](../images/module-canvas.png)
+
+## 메모
+
+- 테이블에 constraint 걸기
+  `@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"barcode"}))`
+
+- Entity의 속성을 Value Object로 매핑하기
+
+```java
+class Book { 
+    @Embedded
+    private Barcode inventoryNumber;
+    @Embedded
+    @AttributeOverride(name = "name", column = @Column(name = "author"))
+    private Author author;
+    @Enumerated(EnumType.STRING)
+    private BookStatus status;
+
+    public record Barcode(String barcode) { }
+    public record Author(String name) { }
+    public enum BookStatus { AVAILABLE, ISSUED }
+}
+```
+
+- aggregate root
+    - 애그리것에 대한 모든 변경(예: 도서의 상태 수정)은 Book 엔티티를 통해서만 이루어져야 하고, 모듈 자체로 제한되어야 함
+ 
+- 상태 변경을 유발하는 메소드의 이름 명명 규칙(markXXX)
+    - `Book::markIssued`: 대여됨으로 상태 변경
+    - `Book::markAvailable`: 대여 가능 상태로 변경
+
+- Bounded Context > Sub domains > application + domain + ui
+  - 하나의 바운디드 컨텍스는 1개 이상의 서브 도메인을 가질 수 있음
+    - 바운디드 컨텍스트가 모듈이고 배포의 단위인 듯
+  - 서브 도메인은 application, infra, domain, ui 등의 패키지를 가질 수 있음
