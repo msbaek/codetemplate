@@ -18,7 +18,7 @@ from https://martinfowler.com/bliki/TestDrivenDevelopment.html
 ## Add Failing Test - Red
 ### 테스트 추가하는 순서
 - 단위 테스트의 대상은 행위(요구사항, 유스케이스, 사용자 스토리 등)임
-- 제일 먼저 작성할 것은 High Level Test. 이 테스트가 나중에 우리가 원하는 설계가 됨. target model
+- 제일 먼저 작성할 것은 High Level Test. 이 테스트가 나중에 우리가 원하는 설계(target design)가 됨
     - high level outline을 커멘트로 작성
   ```java
   // 1. validate user & followed
@@ -28,8 +28,9 @@ from https://martinfowler.com/bliki/TestDrivenDevelopment.html
   ```
 - 그런데 이러한 High Level Test를 짧은 시간에 통과시킬 수 없음
 - 커멘트 처리하고 사소한 테스트 케이스부터 처리
-- 이때 테스트에서 온전히 메소드를 구현한 후 제품코드의 클래스로 Move Instance Method를 하거나, Extract Delegate
-    - 제품코드가 생겼을 때 이미 테스트 코드가 존재하게됨
+  - degenerate test list 생성하고 하나씩 추가하면서 make it work
+  - 이때 테스트에서 온전히 메소드를 구현한 후 제품코드의 클래스로 Move Instance Method를 하거나, Extract Delegate
+      - 제품코드가 생겼을 때 이미 테스트 코드가 존재하게됨
 
 ### Degenerate Test
 - 테스트에 degenerate case부터 추가해야 제품 코드가 단순해짐. guard clause를 준수하게 되어서 들여쓰기가 줄어들어 인지적 부담을 줄일 수 있음
@@ -45,7 +46,7 @@ from https://martinfowler.com/bliki/TestDrivenDevelopment.html
 
 ## 단위 테스트와 개발자 테스트
 ### 단위 테스트(sociable)
-- 서로 격리된(isolated) 테스트로서 행위에 대한 것임(어떤 클래스의 메소드에 대한 것이 아님)
+- 서로 격리된(isolated) 테스트로서 사용자에게 가치를 제공하는 행위에 대한 것임(어떤 클래스의 메소드에 대한 것이 아님)
 - 모듈의 단일진입점(single entry point)에 대한 테스트
 - 시스템의 행위가 어떤 것인지에 대한 이야기여야
 

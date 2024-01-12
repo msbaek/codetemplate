@@ -46,4 +46,8 @@
         <description>Created after removal of "거인의 노트" from TDD and Refactoring</description>
         <accepts>거인의-노트.html</accepts>
     </rule>
+    <rule id="e6a20b1">
+        <description>Created after removal of "구현 사례" from TDD and Refactoring</description>
+        <accepts>구현-사례.html</accepts>
+    </rule>
 </rules>

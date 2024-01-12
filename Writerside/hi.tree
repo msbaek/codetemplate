@@ -10,7 +10,9 @@
     <toc-element topic="Refactoring.md">
         <toc-element topic="Code-Review.md"/>
     </toc-element>
-    <toc-element topic="TDD.md"/>
+    <toc-element topic="TDD.md">
+        <toc-element topic="TDD-Terms.md"/>
+    </toc-element>
     <toc-element topic="DDD.md">
     </toc-element>
     <toc-element topic="Spring.md">
@@ -30,6 +32,7 @@
         </toc-element>
         <toc-element topic="Writerside.md"/>
     </toc-element>
+    <toc-element topic="Practices.md"/>
     <toc-element topic="Terms.md"/>
     <toc-element topic="Etc.md"/>
 </instance-profile>

@@ -8,6 +8,7 @@
 ![keyboard-navigation.png](keyboard-navigation.png)
 
 ## dracula_theme
+
 - [dracula_theme](https://draculatheme.com)
 - intellij, chrome
 
@@ -25,20 +26,22 @@
     - [fs](https://alfred.app/workflows/alfredapp/simple-folder-search/): Simple Folder Search
     - [fzf](https://alfred.app/workflows/yohasebe/fzf/): Fuzzy find files and folders
     - [atop](https://alfred.app/workflows/chrisgrieser/atop/): System Monitoring and Process Management
-      - Processes
-      - Network
-      - Bluetooth
-      - Removable Volumes
-      - Uptime
-      - Speedtest
-      - DNS
+        - Processes
+        - Network
+        - Bluetooth
+        - Removable Volumes
+        - Uptime
+        - Speedtest
+        - DNS
     - [;](https://alfred.app/workflows/fedecalendino/emoji-mate/): Emoji Mate. Search for emoji
     - [http](https://alfred.app/workflows/rknightuk/http-status-codes/): Search for HTTP status codes
     - [Dash](https://alfred.app/workflows/kapeli/dash/)
     - [13km in inches](https://alfred.app/workflows/biatidigital/calculate-anything/)
     - [ip](https://alfred.app/workflows/alexchantastic/ip-address/): Get your local and external IP addresses
-    - [elink](https://alfred.app/workflows/sepulchra/mail-link/): Mail Link. Create link to selected message in Apple Mail
-    - [Calculate Anything](https://alfred.app/workflows/biatidigital/calculate-anything/): Convert measurements, currencies, time, and more using natural language
+    - [elink](https://alfred.app/workflows/sepulchra/mail-link/): Mail Link. Create link to selected message in Apple
+      Mail
+    - [Calculate Anything](https://alfred.app/workflows/biatidigital/calculate-anything/): Convert measurements,
+      currencies, time, and more using natural language
         - `123 usd in krw`
         - `13cm inches`
         - `time now + 3 workdays`
@@ -46,13 +49,65 @@
         - wifi / eth / wifilist / vpn / dns
     - [netquality](https://alfred.app/workflows/alfredapp/network-quality/): Network Quality
     - [qr](https://alfred.app/workflows/torreybetts/qr-code/): QR Code. Generates QR codes
-    - [rf](https://alfred.app/workflows/jygh/recent-files/): Recent Files. List the most recently created or modified files
-    - [screen recording](https://alfred.app/workflows/vitor/start-recording/): Start Recording. Shortcuts to record your Mac’s audio, screen, or webcam
+    - [rf](https://alfred.app/workflows/jygh/recent-files/): Recent Files. List the most recently created or modified
+      files
+    - [screen recording](https://alfred.app/workflows/vitor/start-recording/): Start Recording. Shortcuts to record your
+      Mac’s audio, screen, or webcam
     - [timer](https://alfred.app/workflows/colomolo/timer/): Timer. Set short timers and pomodoros
         - `timer 40m` / `timers` / `pomodoro`
     - [notion-search-alfred5-workflow](https://github.com/wrjlewis/notion-search-alfred-workflow)
     - [alfred-workflow-jira-search-utilities](https://github.com/scarstens/alfred-workflow-jira-search-utilities)
     - [Add to calendar](https://github.com/toysmoon/alfred-korean-calendar-workflow)
+
+## Arc
+
+- 주요 기능
+    - pin tabs to save for later: never auto archive
+    - Favorites: Pinned Tabs that are accessible in every Space
+    - spaces
+    - split view
+    - memo(?)
+    - PIP
+    - Easels
+    - Air Traffic Control: Route Links to the Right Space Automatically
+        - Command-T and type "Open Link Preferences", or
+        - Go to Arc > Settings > Links
+        - url 패턴으로 어떤 스페이스에 열지 지정 가능
+        - 디폴트 스페이스도 지정 가능
+    - site search
+        - history, bookmark, youttube, X, ...
+- 주소창에 다양한 명령을 입력해서 OS를 다루는 느낌
+    - “Add Right Split”, “Add Left Split”, “Add Top Split” or “Add Bottom Split”.
+- Max
+    - Ask on Page: ⌘F
+    - 5-Second Previews: ⇧ + Hover
+- Ask ChatGTP
+    - command bar에서 chat + tab
+- 주요 Shortcuts
+
+| Desc                          | Shortcuts |
+|-------------------------------|-----------|
+| Add **Split** View            | ^\        |
+| Capture                       | ⇧⌘2       |
+| Capture **Full Page**         | ^⇧⌘F      |
+| Capture in **Portrait Mode**  | ^⇧⌘P      |
+| Clear Unpinned Tabs           | ⇧⌘        |
+| Copy URL as **Markdown**      | ⇧⌥⌘C      |
+| Developer Tools               | ⌥⌘I       |
+| JavaScript Console            | ⌥⌘J       |
+| Enter/Exit Reader Mode (beta) | ⇧⌘R       |
+| Force Refresh the Page        | ⇧⌘R       |
+| Go to Sidebar Item            | 1 ⌘1      |
+| New Note                      | ^⇧N       |
+| New **Note(Split)**           | ^⌥N       |
+| Next **Space**                | ⌥⌘→       |
+| Next/Prev **Tab**             | ⌥⌘↑/↓     |
+| Next/Prev **Split View**      | ^⇧]/[     |
+| **Pin**/Unpin Tab             | ⌘D        |
+| popup                         | ⇧+click   |
+| Show/Hide **Sidebar**         | ⌘S        |
+| Show/Hide **Toolbar**         | ⇧⌘D       |
+| View Library 열기               | ⇧⌘L       |
 
 ## Chrome Extentiosn
 
@@ -61,15 +116,17 @@
     - PR
 - Clip to DEVONthink
 - Save to Pocket
-- Tab Switcher: 전체 탭 목록을 보여줌. 검색 가능 
+- Tab Switcher: 전체 탭 목록을 보여줌. 검색 가능
 - Tab to Window/Popup: 현재 탭을 별도의 윈도우로
 
 ## Fig
+
 - autocomplete
 - scripts
 - servers
 
 ## AstroNvim
+
 - explorer
 - Todos
 - find
@@ -78,7 +135,8 @@
 
 - split
 - save session
-- 
+-
+
 ## marp
 
 ## Rectangle
@@ -90,18 +148,19 @@
 ## DevonThink
 
 ## brew
+
 - autojump
     - j ktown4u ; 최근 방문한 디렉토리중 ktown4u가 포함된 디렉토리로 이동
     - jo ktown4u; finder에서 열기
 - bat
     - `alias cat='bat --plain --wrap character'`
 - cheat
-  - terminal에서 command에 대한 cheat sheet를 보여줌
+    - terminal에서 command에 대한 cheat sheet를 보여줌
 - bottom
     - `btm`
     - 터미널에서 CPU, Memeory, Network 상태를 그래픽하게 보여줌
 - devtoys
-  - Converters, Encoders / Decoders, Formatter, Generators, Text(diff)
+    - Converters, Encoders / Decoders, Formatter, Generators, Text(diff)
 - [diff-so-fancy](https://github.com/so-fancy/diff-so-fancy)
     - git이 diff 결과에 diff-so-fancy을 사용하도록 설정 변경
       ```shell
@@ -128,7 +187,7 @@
 - duf
     - Disk Usage/Free Utility
 - dust
-  - `dust -H -r ~/Downloads/`
+    - `dust -H -r ~/Downloads/`
 - gdu
     - go DiskUsage
     - `gdu -d` # show all mounted disks
@@ -140,39 +199,39 @@
 - gh
     - GitHub on the command line
 - [hammerspoon](https://www.hammerspoon.org/)
-  - esc 눌리면 영문 모드로 강제 변경
-    ```
-    -- key mapping for vim
-    -- Convert input soruce as English and sends 'escape' if inputSource is not English.
-    -- Sends 'escape' if inputSource is English.
-    -- key bindding reference --> https://www.hammerspoon.org/docs/hs.hotkey.html
-    -- local inputEnglish = "com.apple.keylayout.ABC" -- 구름 입력
-    -- local inputEnglish = "com.apple.keylayout.Roman" -- default
-    local inputEnglish = "com.apple.keylayout.ABC"
-    local esc_bind
-
-    function convert_to_eng_with_esc()
-        local inputSource = hs.keycodes.currentSourceID()
-        if not (inputSource == inputEnglish) then
-            hs.eventtap.keyStroke({}, "right")
-            hs.keycodes.currentSourceID(inputEnglish)
-        end
-        esc_bind:disable()
-        hs.eventtap.keyStroke({}, "escape")
-        esc_bind:enable()
-    end
-
-    function input_eng()
-        -- local input_source = hs.keycodes.currentSourceID()
-        -- if not (input_source == inputEnglish) then
-        hs.keycodes.currentSourceID(inputEnglish)
-        -- end
-    end
-
-    -- hs.hotkey.bind({}, 'tab', input_eng)
-
-    esc_bind = hs.hotkey.new({}, "escape", convert_to_eng_with_esc):enable()
-    ```
+    - esc 눌리면 영문 모드로 강제 변경
+      ```
+      -- key mapping for vim
+      -- Convert input soruce as English and sends 'escape' if inputSource is not English.
+      -- Sends 'escape' if inputSource is English.
+      -- key bindding reference --> https://www.hammerspoon.org/docs/hs.hotkey.html
+      -- local inputEnglish = "com.apple.keylayout.ABC" -- 구름 입력
+      -- local inputEnglish = "com.apple.keylayout.Roman" -- default
+      local inputEnglish = "com.apple.keylayout.ABC"
+      local esc_bind
+  
+      function convert_to_eng_with_esc()
+          local inputSource = hs.keycodes.currentSourceID()
+          if not (inputSource == inputEnglish) then
+              hs.eventtap.keyStroke({}, "right")
+              hs.keycodes.currentSourceID(inputEnglish)
+          end
+          esc_bind:disable()
+          hs.eventtap.keyStroke({}, "escape")
+          esc_bind:enable()
+      end
+  
+      function input_eng()
+          -- local input_source = hs.keycodes.currentSourceID()
+          -- if not (input_source == inputEnglish) then
+          hs.keycodes.currentSourceID(inputEnglish)
+          -- end
+      end
+  
+      -- hs.hotkey.bind({}, 'tab', input_eng)
+  
+      esc_bind = hs.hotkey.new({}, "escape", convert_to_eng_with_esc):enable()
+      ```
 - httpie
     - `http https://www.hammerspoon.org/`
 - icdiff
@@ -217,8 +276,9 @@
 - youtype
     - 한영 모드가 뭔지 보여줌
     - input Source pro와 같이 사용
-    
+
 ## Applications
+
 - Alfred 5.app
 - AppCleaner.app
 - AWS VPN Client
@@ -266,6 +326,7 @@
 - [youtype](https://github.com/freefelt/YouType) & [inputsource.pro](https://inputsource.pro/)
 
 ## Obsidian
+
 - Advanced Slides
 - Advanced Tables
 - Autocomplete

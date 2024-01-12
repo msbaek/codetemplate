@@ -685,12 +685,45 @@ class Book {
 
 - aggregate root
     - 애그리것에 대한 모든 변경(예: 도서의 상태 수정)은 Book 엔티티를 통해서만 이루어져야 하고, 모듈 자체로 제한되어야 함
- 
+
 - 상태 변경을 유발하는 메소드의 이름 명명 규칙(markXXX)
     - `Book::markIssued`: 대여됨으로 상태 변경
     - `Book::markAvailable`: 대여 가능 상태로 변경
 
 - Bounded Context > Sub domains > application + domain + ui
-  - 하나의 바운디드 컨텍스는 1개 이상의 서브 도메인을 가질 수 있음
-    - 바운디드 컨텍스트가 모듈이고 배포의 단위인 듯
-  - 서브 도메인은 application, infra, domain, ui 등의 패키지를 가질 수 있음
+    - 하나의 바운디드 컨텍스는 1개 이상의 서브 도메인을 가질 수 있음
+        - 바운디드 컨텍스트가 모듈이고 배포의 단위인 듯
+    - 서브 도메인은 application, infra, domain, ui 등의 패키지를 가질 수 있음
+
+- Provided Interface
+    - 다른 모듈에 노출되는 API
+    - 스프링 빈이나 모듈에 의해 발행되는 애플리케이션 이벤트에 의해 구현
+
+- Required Interfaces
+    - 스프링 빈, 애플리케이션 이벤트의 형태로 다른 모듈이 노출하는 API에 대한 참조
+
+- spring modulith의 패키지들
+    - 메인 패키지: @SpringBootApplication으로 어노테이션된 클래스가 있는 패키지
+    - 애플리케이션 모듈 패키지: 메인 패키지의 하위 패키지
+        - API 패키지 = 애플리케이션 모듈 패키지 ← → internal 패키지
+
+- 발행된 이벤트 재처리
+    - 완료되지 않은 이벤트는 애플리케이션 재시작 시 재처리됨
+    - 완료되지 않은 이벤트를 일정 시간 후에 재처리 하는 것도 가능
+    - 또, 완료된 이벤트를 DB에서 제거하거나 아카이브 저장소로 이동도 가능
+    - CompletedEventPublications
+        - 이 인터페이스는 완료된 모든 이벤트 발행물에 액세스할 수 있으며, 데이터베이스에서 모든 발행물을 즉시 제거하거나 지정된 기간(예: 1분)보다 오래된 완료된 발행물을 제거하기 위한 API를 제공
+    - IncompleteEventPublications
+        - 이 인터페이스는 모든 완료되지 않은 이벤트 발행물에 액세스하여 지정된 조건과 일치하거나 원래 발행 날짜를 기준으로 지정된 기간보다 오래된 발행물을 다시 제출할 수 있도록 함
+
+- 이벤트 발행 로그 활성화
+  - EventPublicationRepository(spring-modulith-starter-jpa)가 제공됨
+  - spring.modulith.events.jdbc-schema-initialization.enabled=true
+
+- Externalizing Events
+  - Kafka, AMQP, JMS, SQS, SNS
+
+- Bootstrap Modes
+  - STANDALONE(default): Runs the current module only.
+  - DIRECT_DEPENDENCIES: Runs the current module as well as all modules the current one directly depends on.
+  - ALL_DEPENDENCIES: Runs the current module and the entire tree of modules depended on.
