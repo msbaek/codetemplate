@@ -84,6 +84,7 @@
 - Ask ChatGTP
     - command bar에서 chat + tab
 - 주요 Shortcuts
+  - ^tab 후에 shift+tab+화살표로 열려 있는 탭 이동
 
 | Desc                          | Shortcuts |
 |-------------------------------|-----------|
