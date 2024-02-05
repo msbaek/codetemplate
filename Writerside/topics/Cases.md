@@ -2,7 +2,9 @@
 
 - refactoring-cases 프로젝트 소스가 있음
 
-## Overall Tyding
+## Overall Refactoring
+
+### Tyding { id="simle-tyding" }
 
 - 절차적, 명령형 스타일로 개발이 되었고, 테스트가 존재할 때
 
@@ -22,6 +24,15 @@
 
 - split by abtraction layer
 - split unrelated complexity
+
+### Refactoring Levels
+
+1. 가독성, 유지보수성
+2. 중복 제거
+3. 악취 제거
+4. Toward Patterns
+
+- [리패터링 단계에서 자주하는 실수](Canon-TDD.md#mistakes-in-refactoring)
 
 ## 메소드를 추출하기 전까지의 개발 과정
 
@@ -297,17 +308,3 @@ ba8c25f lift up condition 1 - instroduce conditional variable
 e4431ba deal IDE warnings
 b505eac (tag: s_liftup) add CombinationApprovals.verifyAllCombinations
 ```
-
-## 유용한 규칙
-
-### 반드시 단순해야 하는 구문들
-
-- 3항 연산자
-- 스트림 파이프 라인
-- 조건문
-
-## 유용한 기법
-
-### Compare with clipboard
-
-- 중복으로 의심되는 코드 조사에 유용
