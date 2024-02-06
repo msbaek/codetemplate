@@ -26,7 +26,7 @@ from [Note by Vic Wu on Substack: "I draw a flowchart from the article. Hope you
 - 이 과정을 누락하면 TDD는 코딩을 시작하게는 하지만 **언제 완료인지 알 수 없음(언제 멈춰야 하는지)**
   - “TDD just launches into coding 🚀. You’ll never know when you’re done.”
 - 이 단계에서 발생하는 실수
-  - **구현 설계 결정(implementation design decisions)** 과 행위 분석 결절을 혼합함
+  - **구현 설계 결정(implementation design decisions)** 과 행위 분석 결정을 혼합함
   - 내부 구현을 어떻게 설계할 지 결정할 시간은 나중에 충분히 있음
   - **테스트 목록 작성에만 집중하면 테스트 목록을 더 잘 작성할 수 있음**
   - 냅킨에 간단한 설계를 할 수도 있지만 실제로는 필요치 않을 수 있음
@@ -61,6 +61,9 @@ from [Note by Vic Wu on Substack: "I draw a flowchart from the article. Hope you
     - 테스트 성공(구현)과 **리팩터링을 혼합해서** 진행
         - Make it work → Make it right
         - 당신의 두뇌가 감사할 것임
+- 이 단계에서는 빠르게 구현하는 것이 중요
+  - duct tape programming, copilot, stackoverflow 등을 활용해서
+  - 문제를 정확히 이해하고, 예상치 못했던 이슈를 빨리 파악하기 위해
 
 ### 4. 선택적으로 리팩터링하여 구현 설계 개선
 - Optionally refactor to improve the implementation design
