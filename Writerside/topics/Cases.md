@@ -22,15 +22,18 @@
    paremterized object, field of entity) ← 충분히 연습이 되었다면
 6. trimming ← 충분히 연습이 되었다면
 
-- split by abtraction layer
-- split unrelated complexity
-
 ### Refactoring Levels
 
 1. 가독성, 유지보수성
+    - 최소한의 리팩터링
+    - ![minimum-refactoring.png](../images/minimum-refactoring.png)
+    - 청소기나 빗자루, 쓰레받이 등의 청소도구가 없어도 손과 종이 등을 이용해서 청소를 할 수 있음
+    - 객체지향 원칙, 디자인 패턴, 리팩터링 기법 등을 모르더라도 깨끗해야 하는 코드(본질적 복잡성)와 지저분할 수 있는 코드(우발적 복잡성)을 분리할 수는 있다
 2. 중복 제거
 3. 악취 제거
 4. Toward Patterns
+    - split by abtraction layer
+    - split unrelated complexity
 
 - [리패터링 단계에서 자주하는 실수](Canon-TDD.md#mistakes-in-refactoring)
 

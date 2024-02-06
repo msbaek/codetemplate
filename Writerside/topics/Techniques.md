@@ -18,6 +18,9 @@
 - 전역 변수나 싱글톤을 메소드에서 사용하는 경우
 - 해당 변수를 파라미터로 추출해서 메소드 시그니처에 명시적으로 의존성이 보이도록 개선
 
+## Repeated Switches
+- [Repeated Switches](https://sammancoaching.org/code_smells/repeated_switches.html)
+
 ## Lift up conditional
 
 - indentation에 깊게 들어가며 동일 조건문이 2곳 이상에서 사용되는 경우 조건문을 단순화 하기 위해

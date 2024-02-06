@@ -21,7 +21,6 @@
     <toc-element topic="DDD.md">
     </toc-element>
     <toc-element topic="Spring.md">
-        <toc-element topic="Spring-AI.md"/>
         <toc-element topic="Application-Event-Subsystem.md"/>
     </toc-element>
     <toc-element topic="JPA.md">
