@@ -5,14 +5,16 @@
 ### Tyding { id="simle-tyding" }
 
 - 절차적, 명령형 스타일로 개발이 되었고, 테스트가 존재할 때
+  - 제일 먼저 이렇게 하는 이유
+    - 구현을 완료해봐야 **문제를 정확히 이해**하고, 사전에 **예측하기 어려운 이슈를 발견**할 수 있음
 
 1. Reorder - slide statements
 
-   - reading / cohesion order
+    - reading / cohesion order
 
 2. Chunk Statements
 
-   - 관련된 코드 블록을 그룹핑(빈 라인을 삽입)
+    - 관련된 코드 블록을 그룹핑(빈 라인을 삽입)
 
 3. Explaining Comment ← 필수1
 4. Explaining Variable / Method towards Composed Method ← 필수2(**좋은 이름을 붙일 수 있으면**)
@@ -54,7 +56,13 @@
 - 해당 변수를 파라미터로 추출해서 메소드 시그니처에 명시적으로 의존성이 보이도록 개선
 
 ## Repeated Switches
+
 - [Repeated Switches](https://sammancoaching.org/code_smells/repeated_switches.html)
+- polymorphism을 유도하는 방법
+    1. client(test) 코드에서
+    2. replace constructor with factory method 후에 factory method에서
+
+- [예제](Cases.md#repeated-switch)
 
 ## Lift up conditional
 
@@ -73,6 +81,8 @@
     4. inline extracted
     5. deal with IDE warnings
     6. 1~6을 중복 조건문에 대해서 수행
+
+- [예제](Cases.md#lift-up-conditional)
 
 ## 유사한 기능을 추가하는 절차
 
@@ -167,6 +177,7 @@
 - 조건문
 
 ### Compare with clipboard
+
 - 중복으로 의심되는 코드 조사에 유용한 IntelliJ 기능
 - 클립보드에 코드 블록을 복사 한 후 다른 코드 블록을 선택하고 `Compare with clipboard`를 실행하면 차이점을 보여줌
 - [Compare with clipboard](https://www.jetbrains.com/help/idea/pro-tips.html#compare-with-clipboard)

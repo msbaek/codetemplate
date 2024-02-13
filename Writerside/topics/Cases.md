@@ -1,10 +1,17 @@
 # Cases
 
-- refactoring-cases 프로젝트 소스가 있음
+- [msbaek/refactoring-cases](https://github.com/msbaek/refactoring-cases): 리팩터링 케이스 소스 리파지토리
 
 ## 메소드를 추출하기 전까지의 개발 과정
 
-![steps-before-extract-method.png](../images/steps-before-extract-method.png)
+- [tyding](Techniques.md#simle-tyding)
+
+- 메소드 추출에서 중요한 점
+  1. 의도를 나타내는 이름을 붙일 수 있나 ?
+     - 좋을 이름을 부여할 수 없다면 다음에 추출해야
+  2. 함께 추출할 코드가 있다면 함께 추출
+  3. [Composed Method](https://github.com/msbaek/memo/blob/master/refactoring-tech/composed_method.md), [SLAP](https://github.com/msbaek/memo/blob/master/refactoring-tech/composed_method.md#slapsingle-level-of-abstraction-principle) 를 지향하는 방향으로 메소드 추출
+     - 가독성, 유지보수성
 
 ## Remove Tagging Variable
 
@@ -22,8 +29,14 @@
 
 ![implicit-global-variable.png](../images/implicit-global-variable.png)
 
+- 함수, 메소드에서 전역변수(싱글톤 포함)를 사용하고 있으면 메소드 시그니처에 명시적으로 의존성이 보이도록 개선
+- 전역변수를 파라미터로 추출해서 메소드 시그니처에 명시적으로 의존성이 보이도록 개선
+
 ## Guard Clause - Early Return
 
+- [Guard (computer science)](https://en.wikipedia.org/wiki/Guard_(computer_science))
+- [Replace Nested Conditional with Guard Clauses](https://refactoring.com/catalog/replaceNestedConditionalWithGuardClauses.html)
+- 
 ```Java
 public void processOrder(Order order) {
     if (order != null) {
@@ -40,9 +53,10 @@ public void processOrder(Order order) {
 }
 ```
 
-- 분기문에 return을 추가
-- invert-if해서 단순한 경우부터 처리
-- indentation이 줄어들어 인지적 복잡도가 줄어듦
+- invert-if해서 단순한 경우(`order == null`)부터 처리
+- 들여쓰기(indentation)가 줄어들어 인지적 복잡도가 줄어듦
+- 테스트를 추가할 때 Degenerate Test를 먼저 추가하면 함수의 앞부분에 guard clause가 먼저 추가됨
+- 함수는 주요한 로직이 나중에 구현되고, 조건문으로 인한 들여쓰기도 적어지게 되어 복잡도가 감소함
 
 ## Split Phase
 
@@ -243,6 +257,14 @@ e14b4be add class for extract value object
 
 ### From Primitive Obsession to Domain Modelling
 
+- Primitive obsession is a type of code smell that developers can’t identify intuitively.
+- It occurs when a primitive value controls the logic in a class and represents complex concepts or behaviors. In simple words, when a code relies too much on primitive values.
+- Using primitives for everything is certainly a bad practice. This leads to poor readability, validation, and abstraction.
+- Solutions
+  - Replace the data value with the object if the primitive fields logically belong together.
+  - ‘Introduce a parameter object’ to represent the data and clean up the code base.
+  - ‘Preserve the whole object’ when its state is needed together. Avoid extracting small parts of objects to pass around.
+- [Understanding Code Smells and How to Avoid Them | by typo | Typo blog | Jan, 2024 | Medium](https://medium.com/beyond-the-code-by-typo/understanding-code-smells-and-how-to-avoid-them-7ea52c295734)
 - [From Primitive Obsession to Domain Modelling](https://blog.ploeh.dk/2015/01/19/from-primitive-obsession-to-domain-modelling/)
 
 ```
@@ -276,3 +298,35 @@ ba8c25f lift up condition 1 - instroduce conditional variable
 e4431ba deal IDE warnings
 b505eac (tag: s_liftup) add CombinationApprovals.verifyAllCombinations
 ```
+
+## repeated-switch
+
+```
+04911a8 parrot - add files
+f531eb0 parrot - Replace constructor with factory method
+9e7ae25 parrot - extract variable parrot
+8e7433b parrot - Split into declaration and assignment
+7247d54 parrot - apply switch in factory method
+1badd1d parrot - add subclasses
+1559e4f parrot - use known constant instead of passed argument(type)
+ed0788a parrot - Safe delete 'type'
+5ffe08d parrot - repeat remove type in constructor in other 2 subclasses
+d149d5e parrot - Push Members Down...
+124823f parrot - make it work
+0dade53 parrot - use constant in switch
+4f97715 parrot - Replace with old style 'switch' statement
+aabd05d parrot - Remove unreachable branches
+9ed89ac parrot - inline unnecessary variable
+53e8619 parrot - replace type with constant and remove unreachable branches
+bdd00d1 parrot - push members down(getSpeed)
+486a5c2 parrot - make it work
+8cd4322 parrot - replace type with constant and remove unreachable branches
+5818024 parrot - find usage and push members down
+1feaefe parrot - make it work. remove unnecessary field, parameter
+0fa0889 parrot - find usage, push members down, make it work
+2fa8836 (HEAD -> main, parrot) parrot - find usage, push members down, make it work for isNailed
+```
+
+## 참고 사이트
+
+- [Catalog of Refactorings](https://refactoring.com/catalog/)

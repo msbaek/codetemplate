@@ -30,7 +30,7 @@
    5.1 절차적/명령형으로 컨트롤러에 모든 기능을 구현 with Test First
     - 여기까지는 설계 역량(refactoring)이 없어도 할 수 있는 영역임
     - 빵구조만 유지하고, 테스트만 존재한다면 지속적으로 개선 할 수 있음
-      5.2 Refactoring to 가독성/유지보수성(Composed Method, SLAP)
+      5.2 Refactoring to 가독성/유지보수성([Composed Method]([memo/refactoring-tech/composed_method.md at master · msbaek/memo](https://github.com/msbaek/memo/blob/master/refactoring-tech/composed_method.md)), [SLAP](https://github.com/msbaek/memo/blob/master/refactoring-tech/composed_method.md#slapsingle-level-of-abstraction-principle))
     - 코드 품질의 목표는 가독성과 유지보수성임
 
 ### 이슈

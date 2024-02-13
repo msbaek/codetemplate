@@ -7,7 +7,19 @@
 
 ![keyboard-navigation.png](keyboard-navigation.png)
 
-## dracula_theme
+## Key Settings
+
+![lang-change.png](../images/lang-change.png)
+
+### Karabiner Elements
+
+- Simple Modifications
+  - ![karabiner-1.png](../images/karabiner-1.png)
+  - Apple Internal Keyboard: caps_lock → left_control
+- Complex Modifications
+  - ![karabiner-2.png](../images/karabiner-2.png)
+
+## Dracula Theme
 
 - [dracula_theme](https://draculatheme.com)
 - intellij, chrome
@@ -66,9 +78,6 @@
     - Favorites: Pinned Tabs that are accessible in every Space
     - spaces
     - split view
-    - memo(?)
-    - PIP
-    - Easels
     - Air Traffic Control: Route Links to the Right Space Automatically
         - Command-T and type "Open Link Preferences", or
         - Go to Arc > Settings > Links
@@ -81,24 +90,16 @@
 - Max
     - Ask on Page: ⌘F
     - 5-Second Previews: ⇧ + Hover
-- Ask ChatGTP
-    - command bar에서 chat + tab
 - 주요 Shortcuts
   - ^tab 후에 shift+tab+화살표로 열려 있는 탭 이동
 
 | Desc                          | Shortcuts |
 |-------------------------------|-----------|
 | Add **Split** View            | ^\        |
-| Capture                       | ⇧⌘2       |
-| Capture **Full Page**         | ^⇧⌘F      |
-| Capture in **Portrait Mode**  | ^⇧⌘P      |
-| Clear Unpinned Tabs           | ⇧⌘        |
-| Copy URL as **Markdown**      | ⇧⌥⌘C      |
+| Capture **Full Page**         | ⌥⇧⌘F      |
+| Copy URL as **Markdown**      | ⌥⌥⌘C      |
 | Developer Tools               | ⌥⌘I       |
 | JavaScript Console            | ⌥⌘J       |
-| Enter/Exit Reader Mode (beta) | ⇧⌘R       |
-| Force Refresh the Page        | ⇧⌘R       |
-| Go to Sidebar Item            | 1 ⌘1      |
 | New Note                      | ^⇧N       |
 | New **Note(Split)**           | ^⌥N       |
 | Next **Space**                | ⌥⌘→       |
@@ -136,7 +137,6 @@
 
 - split
 - save session
--
 
 ## marp
 
@@ -188,6 +188,7 @@
 - duf
     - Disk Usage/Free Utility
 - dust
+    - Like du but more intuitive
     - `dust -H -r ~/Downloads/`
 - gdu
     - go DiskUsage
