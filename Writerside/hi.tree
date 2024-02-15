@@ -7,6 +7,10 @@
                  start-page="Default-topic.md">
 
     <toc-element topic="Default-topic.md"/>
+    <toc-element topic="Legacy-Code.md">
+        <toc-element topic="Extract-Existing-Blocks.md"/>
+        <toc-element topic="Sprout-Class.md"/>
+    </toc-element>
     <toc-element topic="Refactoring.md">
         <toc-element topic="코드-이해하기.md"/>
         <toc-element topic="Cases.md"/>
@@ -30,6 +34,7 @@
         </toc-element>
     </toc-element>
     <toc-element topic="Tools.md">
+        <toc-element topic="Astronvim.md"/>
         <toc-element topic="Terminal.md"/>
         <toc-element topic="IntelliJ.md"/>
     </toc-element>
