@@ -3,11 +3,11 @@
 ## 📦 Setup
 
 - Install LSP
-    - Enter :LspInstall followed by the name of the server you want to install
-    - Example: :LspInstall pyright
+    - Enter `:LspInstall` followed by the name of the server you want to install
+    - Example: `:LspInstall pyright`
 - Install language parser
-    - Enter :TSInstall followed by the name of the language you want to install
-    - Example: :TSInstall python
+    - Enter `:TSInstall` followed by the name of the language you want to install
+    - Example: `:TSInstall python`
 
 ## General Mappings
 
