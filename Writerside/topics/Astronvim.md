@@ -9,10 +9,6 @@
     - Enter :TSInstall followed by the name of the language you want to install
     - Example: :TSInstall python
 
-## Basic Walkthrough
-| Action      | Mappings   |
-|-------------|------------|
-| Commenting  | Space + /  |
 ## General Mappings
 
 | Action           | Mappings   |
