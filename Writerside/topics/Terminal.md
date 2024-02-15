@@ -1,5 +1,11 @@
 # Terminal
 
+## iTerm2
+
+- [iTerm2에 Dracular 테마 적용하기](https://jojoldu.tistory.com/428)
+- [iterm - How to export iTerm2 Profiles - Stack Overflow](https://stackoverflow.com/questions/22943676/how-to-export-iterm2-profiles)
+    - load할 폴더를 지정해야 export 가능함
+
 ## brew
 
 ```shell
