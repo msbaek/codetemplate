@@ -2,21 +2,21 @@
 
 ## Most Useful
 
-| Action                     | Mappings     |
-|----------------------------|--------------|
-| Live Grep                  | Leader + fw  |
-| Find files                 | Leader + ff  |
-| Word at cursor             | Leader + fc  |
-| Git Branches               | Leader + gb  |
-| Comment                    | Leader + /   |
-| Format Document            | Leader + lf  |
-| Symbols Outline            | Leader + lS  |
-| Document Symbols           | Leader + ls  |
-| Move Buffer Right          | >b           |
-| Move Buffer Left	          | <b           |
-| Sort buffers by full path  | Leader + bsp |
-| Save Session               | Leader + Ss  |
-| AstroNvim Packages Update  | Leader + pa  |
+| Action                         | Mappings     |
+|--------------------------------|--------------|
+| **Live Grep**                  | Leader + fw  |
+| Find files                     | Leader + ff  |
+| Word at cursor                 | Leader + fc  |
+| **Git Branches**               | Leader + gb  |
+| **Comment**                    | Leader + /   |
+| **Format Document**            | Leader + lf  |
+| Symbols Outline                | Leader + lS  |
+| Document Symbols               | Leader + ls  |
+| **Move Buffer Right**          | >b           |
+| Move Buffer Left	              | <b           |
+| **Sort buffers** by full path  | Leader + bsp |
+| Save Session                   | Leader + Ss  |
+| AstroNvim Packages Update      | Leader + pa  |
 
 ## 📦 Setup
 
