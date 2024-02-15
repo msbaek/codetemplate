@@ -3,6 +3,27 @@
 > "Give me six hours to chop down a tree and I will spend the first four sharpening the axe."
 > - 나무를 베는데 6시간을 준다면, 4시간은 도끼 날을 가는 데 쓰겠다. (에이브러햄 링컨)
 
+## Useful Brew Commands
+
+| command | description                                                               |
+|---------|---------------------------------------------------------------------------|
+| duf     | Disk Usage/Free Utility                                                   |
+| dust    | Like du but more intuitive                                                |
+|         | dust -H -r ~/Downloads/                                                   |
+| gdu     | go DiskUsage                                                              |
+|         | gdu -d# show all mounted disks                                            |
+| rg      | (ripgrep)recursively searches the current directory for a regex pattern.  |
+|         | -c count                                                                  |
+|         | -i ignore case                                                            |
+|         | --json json result                                                        |
+|         | -n line number                                                            |
+|         | -p pretty                                                                 |
+|         | -e pattern                                                                |
+|         | -r replace                                                                |
+|         | -l, --files-with-matches                                                  |
+|         | -z search zip                                                             |
+
+
 ## Mac Settings
 
 ![keyboard-navigation.png](keyboard-navigation.png)
