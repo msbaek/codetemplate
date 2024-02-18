@@ -5,171 +5,111 @@
 
 ## Useful Brew Commands
 
-| command | description                                                               |
-|---------|---------------------------------------------------------------------------|
-| duf     | Disk Usage/Free Utility                                                   |
-| dust    | Like du but more intuitive                                                |
-|         | dust -H -r ~/Downloads/                                                   |
-| gdu     | go DiskUsage                                                              |
-|         | gdu -d# show all mounted disks                                            |
-| rg      | (ripgrep)recursively searches the current directory for a regex pattern.  |
-|         | -c count                                                                  |
-|         | -i ignore case                                                            |
-|         | --json json result                                                        |
-|         | -n line number                                                            |
-|         | -p pretty                                                                 |
-|         | -e pattern                                                                |
-|         | -r replace                                                                |
-|         | -l, --files-with-matches                                                  |
-|         | -z search zip                                                             |
-
+| command | description                                                              |
+|---------|--------------------------------------------------------------------------|
+| duf     | Disk Usage/Free Utility                                                  |
+| dust    | Like du but more intuitive                                               |
+|         | dust -H -r ~/Downloads/                                                  |
+| gdu     | go DiskUsage                                                             |
+|         | gdu -d# show all mounted disks                                           |
+| rg      | (ripgrep)recursively searches the current directory for a regex pattern. |
+|         | -c count                                                                 |
+|         | -i ignore case                                                           |
+|         | --json json result                                                       |
+|         | -n line number                                                           |
+|         | -p pretty                                                                |
+|         | -e pattern                                                               |
+|         | -r replace                                                               |
+|         | -l, --files-with-matches                                                 |
+|         | -z search zip                                                            |
 
 ## Mac Settings
 
 ![keyboard-navigation.png](keyboard-navigation.png)
 
-## Key Settings
+## brew
+- https://brew.sh/
 
-![lang-change.png](../images/lang-change.png)
+```shell
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
 
 ### Karabiner Elements
 
 - Simple Modifications
-  - ![karabiner-1.png](../images/karabiner-1.png)
-  - Apple Internal Keyboard: caps_lock → left_control
+    - ![karabiner-1.png](../images/karabiner-1.png)
+    - Apple Internal Keyboard: caps_lock → left_control
 - Complex Modifications
-  - ![karabiner-2.png](../images/karabiner-2.png)
+    - ![karabiner-2.png](../images/karabiner-2.png)
+
+## Key Settings
+
+![lang-change.png](../images/lang-change.png)
+
+- 구름 입력시 설치 후 반드시 재부팅을 해야 함
+- [[맥App]맥북 유저 - 구름입력기(모아치기)](https://dalkomlife.tistory.com/26)
+  ![gureum-1.png](../images/gureum-1.png)
 
 ## Dracula Theme
 
 - [dracula_theme](https://draculatheme.com)
 - intellij, chrome
 
-## Alfred
+## iTerm2
 
-- web search
-- file search
-- bookmarks
-- clipboard history
-- snippets
-- system
-- terminal
-- workflows
-    - [gallery](hhttps://alfred.app/workflows/alfredapp/alfred-gallery/): Alfred Gallery
-    - [fs](https://alfred.app/workflows/alfredapp/simple-folder-search/): Simple Folder Search
-    - [fzf](https://alfred.app/workflows/yohasebe/fzf/): Fuzzy find files and folders
-    - [atop](https://alfred.app/workflows/chrisgrieser/atop/): System Monitoring and Process Management
-        - Processes
-        - Network
-        - Bluetooth
-        - Removable Volumes
-        - Uptime
-        - Speedtest
-        - DNS
-    - [;](https://alfred.app/workflows/fedecalendino/emoji-mate/): Emoji Mate. Search for emoji
-    - [http](https://alfred.app/workflows/rknightuk/http-status-codes/): Search for HTTP status codes
-    - [Dash](https://alfred.app/workflows/kapeli/dash/)
-    - [13km in inches](https://alfred.app/workflows/biatidigital/calculate-anything/)
-    - [ip](https://alfred.app/workflows/alexchantastic/ip-address/): Get your local and external IP addresses
-    - [elink](https://alfred.app/workflows/sepulchra/mail-link/): Mail Link. Create link to selected message in Apple
-      Mail
-    - [Calculate Anything](https://alfred.app/workflows/biatidigital/calculate-anything/): Convert measurements,
-      currencies, time, and more using natural language
-        - `123 usd in krw`
-        - `13cm inches`
-        - `time now + 3 workdays`
-    - [Network](https://alfred.app/workflows/mrodalgaard/network/): Show and change your network settings
-        - wifi / eth / wifilist / vpn / dns
-    - [netquality](https://alfred.app/workflows/alfredapp/network-quality/): Network Quality
-    - [qr](https://alfred.app/workflows/torreybetts/qr-code/): QR Code. Generates QR codes
-    - [rf](https://alfred.app/workflows/jygh/recent-files/): Recent Files. List the most recently created or modified
-      files
-    - [screen recording](https://alfred.app/workflows/vitor/start-recording/): Start Recording. Shortcuts to record your
-      Mac’s audio, screen, or webcam
-    - [timer](https://alfred.app/workflows/colomolo/timer/): Timer. Set short timers and pomodoros
-        - `timer 40m` / `timers` / `pomodoro`
-    - [notion-search-alfred5-workflow](https://github.com/wrjlewis/notion-search-alfred-workflow)
-    - [alfred-workflow-jira-search-utilities](https://github.com/scarstens/alfred-workflow-jira-search-utilities)
-    - [Add to calendar](https://github.com/toysmoon/alfred-korean-calendar-workflow)
+- `$ brew install iterm2`
+- [iTerm2에 Dracular 테마 적용하기](https://jojoldu.tistory.com/428)
+- [iterm - How to export iTerm2 Profiles - Stack Overflow](https://stackoverflow.com/questions/22943676/how-to-export-iterm2-profiles)
+    - load할 폴더를 지정해야 export 가능함
 
-## Arc
+## oh-my-zsh
+- https://ohmyz.sh/
+```
+brew install zsh-completions
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/zsh-autosuggestions
+```
 
-- 주요 기능
-    - pin tabs to save for later: never auto archive
-    - Favorites: Pinned Tabs that are accessible in every Space
-    - spaces
-    - split view
-    - Air Traffic Control: Route Links to the Right Space Automatically
-        - Command-T and type "Open Link Preferences", or
-        - Go to Arc > Settings > Links
-        - url 패턴으로 어떤 스페이스에 열지 지정 가능
-        - 디폴트 스페이스도 지정 가능
-    - site search
-        - history, bookmark, youttube, X, ...
-- 주소창에 다양한 명령을 입력해서 OS를 다루는 느낌
-    - “Add Right Split”, “Add Left Split”, “Add Top Split” or “Add Bottom Split”.
-- Max
-    - Ask on Page: ⌘F
-    - 5-Second Previews: ⇧ + Hover
-- 주요 Shortcuts
-  - ^tab 후에 shift+tab+화살표로 열려 있는 탭 이동
+- [iterm & zsh 설치 및 테마 적용 (dracula)](https://medium.com/@keen0927/iterm-zsh-%EC%84%A4%EC%B9%98-%EB%B0%8F-%ED%85%8C%EB%A7%88-%EC%A0%81%EC%9A%A9-dracula-15252641171)
 
-| Desc                          | Shortcuts |
-|-------------------------------|-----------|
-| Add **Split** View            | ^\        |
-| Capture **Full Page**         | ⌥⇧⌘F      |
-| Copy URL as **Markdown**      | ⌥⌥⌘C      |
-| Developer Tools               | ⌥⌘I       |
-| JavaScript Console            | ⌥⌘J       |
-| New Note                      | ^⇧N       |
-| New **Note(Split)**           | ^⌥N       |
-| Next **Space**                | ⌥⌘→       |
-| Next/Prev **Tab**             | ⌥⌘↑/↓     |
-| Next/Prev **Split View**      | ^⇧]/[     |
-| **Pin**/Unpin Tab             | ⌘D        |
-| popup                         | ⇧+click   |
-| Show/Hide **Sidebar**         | ⌘S        |
-| Show/Hide **Toolbar**         | ⇧⌘D       |
-| View Library 열기               | ⇧⌘L       |
+- [oh-my-zsh 테마 및 유용한 플러그인 정리](https://proni.tistory.com/entry/oh-my-zsh-%ED%85%8C%EB%A7%88-%EB%B0%8F-%EC%9C%A0%EC%9A%A9%ED%95%9C-%ED%94%8C%EB%9F%AC%EA%B7%B8%EC%9D%B8-%EC%A0%95%EB%A6%AC)
+- zsh plugins
+    ```shell
+    zsh-autosuggestions
+    zsh-syntax-highlighting
+    web-search
+        > google zsh
+    autojump
+    ```
 
-## Chrome Extentiosn
+## powerlevel10k
 
-- Vimium
-    - gmail
-    - PR
-- Clip to DEVONthink
-- Save to Pocket
-- Tab Switcher: 전체 탭 목록을 보여줌. 검색 가능
-- Tab to Window/Popup: 현재 탭을 별도의 윈도우로
+- [romkatv/powerlevel10k: A Zsh theme](https://github.com/romkatv/powerlevel10k)
+- https://github.com/romkatv/powerlevel10k?tab=readme-ov-file
+```
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
+echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
+```
 
-## Fig
+```shell
+p10k configure
+```
 
-- autocomplete
-- scripts
-- servers
+    - rainbow
+    - angled
+    - sharp
+    - flat
+    - two lines
+    - SOLID
+    - full
+    - lightest
+    - sparse
+    - many icons
+    - concise
+    - transient - n
+    - verbose
 
-## AstroNvim
-
-- explorer
-- Todos
-- find
-
-## Iterm2
-
-- split
-- save session
-
-## marp
-
-## Rectangle
-
-## DevToys
-
-## Things
-
-## DevonThink
-
-## brew
+## brew Formulae
 
 - autojump
     - j ktown4u ; 최근 방문한 디렉토리중 ktown4u가 포함된 디렉토리로 이동
@@ -213,7 +153,7 @@
     - `dust -H -r ~/Downloads/`
 - gdu
     - go DiskUsage
-    - `gdu -d` # show all mounted disks
+    - `gdu-go -d` # show all mounted disks
 - exa
     - `exa -l -a -s modified --git`
     - `exa -D -1 -l`
@@ -296,9 +236,128 @@
         - preview mode: Space
         - delete file or directory: dd / undo: u
         - Display icons: Install Nerd Fonts and add --icons flag.
+- yazi: Blazing Fast Terminal File Manager
 - youtype
     - 한영 모드가 뭔지 보여줌
     - input Source pro와 같이 사용
+
+## Alfred
+
+- web search
+- file search
+- bookmarks
+- clipboard history
+- snippets
+- system
+- terminal
+- workflows
+    - [gallery](hhttps://alfred.app/workflows/alfredapp/alfred-gallery/): Alfred Gallery
+    - [fs](https://alfred.app/workflows/alfredapp/simple-folder-search/): Simple Folder Search
+    - [fzf](https://alfred.app/workflows/yohasebe/fzf/): Fuzzy find files and folders
+    - [atop](https://alfred.app/workflows/chrisgrieser/atop/): System Monitoring and Process Management
+        - Processes
+        - Network
+        - Bluetooth
+        - Removable Volumes
+        - Uptime
+        - Speedtest
+        - DNS
+    - [;](https://alfred.app/workflows/fedecalendino/emoji-mate/): Emoji Mate. Search for emoji
+    - [http](https://alfred.app/workflows/rknightuk/http-status-codes/): Search for HTTP status codes
+    - [Dash](https://alfred.app/workflows/kapeli/dash/)
+    - [13km in inches](https://alfred.app/workflows/biatidigital/calculate-anything/)
+    - [ip](https://alfred.app/workflows/alexchantastic/ip-address/): Get your local and external IP addresses
+    - [elink](https://alfred.app/workflows/sepulchra/mail-link/): Mail Link. Create link to selected message in Apple
+      Mail
+    - [Calculate Anything](https://alfred.app/workflows/biatidigital/calculate-anything/): Convert measurements,
+      currencies, time, and more using natural language
+        - `123 usd in krw`
+        - `13cm inches`
+        - `time now + 3 workdays`
+    - [Network](https://alfred.app/workflows/mrodalgaard/network/): Show and change your network settings
+        - wifi / eth / wifilist / vpn / dns
+    - [netquality](https://alfred.app/workflows/alfredapp/network-quality/): Network Quality
+    - [qr](https://alfred.app/workflows/torreybetts/qr-code/): QR Code. Generates QR codes
+    - [rf](https://alfred.app/workflows/jygh/recent-files/): Recent Files. List the most recently created or modified
+      files
+    - [screen recording](https://alfred.app/workflows/vitor/start-recording/): Start Recording. Shortcuts to record your
+      Mac’s audio, screen, or webcam
+    - [timer](https://alfred.app/workflows/colomolo/timer/): Timer. Set short timers and pomodoros
+        - `timer 40m` / `timers` / `pomodoro`
+    - [notion-search-alfred5-workflow](https://github.com/wrjlewis/notion-search-alfred-workflow)
+    - [alfred-workflow-jira-search-utilities](https://github.com/scarstens/alfred-workflow-jira-search-utilities)
+    - [Add to calendar](https://github.com/toysmoon/alfred-korean-calendar-workflow)
+
+## Arc
+
+- 주요 기능
+    - pin tabs to save for later: never auto archive
+    - Favorites: Pinned Tabs that are accessible in every Space
+    - spaces
+    - split view
+    - Air Traffic Control: Route Links to the Right Space Automatically
+        - Command-T and type "Open Link Preferences", or
+        - Go to Arc > Settings > Links
+        - url 패턴으로 어떤 스페이스에 열지 지정 가능
+        - 디폴트 스페이스도 지정 가능
+    - site search
+        - history, bookmark, youttube, X, ...
+- 주소창에 다양한 명령을 입력해서 OS를 다루는 느낌
+    - “Add Right Split”, “Add Left Split”, “Add Top Split” or “Add Bottom Split”.
+- Max
+    - Ask on Page: ⌘F
+    - 5-Second Previews: ⇧ + Hover
+- 주요 Shortcuts
+    - ^tab 후에 shift+tab+화살표로 열려 있는 탭 이동
+
+| Desc                     | Shortcuts |
+|--------------------------|-----------|
+| Add **Split** View       | ^\        |
+| Capture **Full Page**    | ⌥⇧⌘F      |
+| Copy URL as **Markdown** | ⌥⌥⌘C      |
+| Developer Tools          | ⌥⌘I       |
+| JavaScript Console       | ⌥⌘J       |
+| New Note                 | ^⇧N       |
+| New **Note(Split)**      | ^⌥N       |
+| Next **Space**           | ⌥⌘→       |
+| Next/Prev **Tab**        | ⌥⌘↑/↓     |
+| Next/Prev **Split View** | ^⇧]/[     |
+| **Pin**/Unpin Tab        | ⌘D        |
+| popup                    | ⇧+click   |
+| Show/Hide **Sidebar**    | ⌘S        |
+| Show/Hide **Toolbar**    | ⇧⌘D       |
+| View Library 열기          | ⇧⌘L       |
+
+## Chrome Extentiosn
+
+- Vimium
+    - gmail
+    - PR
+- Clip to DEVONthink
+- Save to Pocket
+- Tab Switcher: 전체 탭 목록을 보여줌. 검색 가능
+- Tab to Window/Popup: 현재 탭을 별도의 윈도우로
+
+## Fig
+
+- autocomplete
+- scripts
+- servers
+
+## AstroNvim
+
+- 설치
+    - `git clone --depth 1 https://github.com/AstroNvim/AstroNvim ~/.config/nvim`
+    - `git clone git@github.com:msbaek/astrovim_config.git ~/.config/nvim/lua/user`
+- explorer
+- Todos
+- find
+
+## marp
+
+## Things
+
+## DevonThink
 
 ## Applications
 

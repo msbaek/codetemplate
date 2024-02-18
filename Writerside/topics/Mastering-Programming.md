@@ -4,8 +4,8 @@
 
 ## Overview
 
-- 견습공은 큰 문제를 한번에 많은 문제를 풀어서 해결
-- 장인은 더 큰 문제를 한번에 더 적은 문제를 풀어서 해결하는 것을 배움
+- 견습공은 한번에 많은 문제를 풀어서 큰 문제를 해결하는 것을 배움
+- 장인은 한번에 더 적은 문제를 풀어서 (견습공의 문제보다) 더 큰 문제를 해결하는 것을 배움
 - 핵심은 분리된 해결책의 통합 비용이 본래 문제를 푸는 비용보다 더 적어진다는 것임
 - The journeyman learns to solve bigger problems by solving more problems at once.
 - The master learns to solve even bigger problems than that by solving fewer problems at once.
