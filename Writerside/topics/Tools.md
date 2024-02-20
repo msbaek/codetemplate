@@ -28,6 +28,7 @@
 ![keyboard-navigation.png](keyboard-navigation.png)
 
 ## brew
+
 - https://brew.sh/
 
 ```shell
@@ -63,7 +64,9 @@
     - load할 폴더를 지정해야 export 가능함
 
 ## oh-my-zsh
+
 - https://ohmyz.sh/
+
 ```
 brew install zsh-completions
 sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -86,6 +89,7 @@ git clone https://github.com/zsh-users/zsh-autosuggestions $ZSH_CUSTOM/plugins/z
 
 - [romkatv/powerlevel10k: A Zsh theme](https://github.com/romkatv/powerlevel10k)
 - https://github.com/romkatv/powerlevel10k?tab=readme-ov-file
+
 ```
 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/powerlevel10k
 echo 'source ~/powerlevel10k/powerlevel10k.zsh-theme' >>~/.zshrc
@@ -116,6 +120,8 @@ p10k configure
     - jo ktown4u; finder에서 열기
 - bat
     - `alias cat='bat --plain --wrap character'`
+- chezmoi
+    - [Quick start - chezmoi](https://www.chezmoi.io/quick-start/)
 - cheat
     - terminal에서 command에 대한 cheat sheet를 보여줌
 - bottom
