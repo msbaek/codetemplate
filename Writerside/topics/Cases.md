@@ -327,6 +327,13 @@ bdd00d1 parrot - push members down(getSpeed)
 2fa8836 (HEAD -> main, parrot) parrot - find usage, push members down, make it work for isNailed
 ```
 
+### extract common part
+
+8451c17 extract-common-parts - add required files
+33df5ff extract-common-parts - replate temp with query before refactoring
+d3f85da extract-common-parts - extract method for remove dup.(with keep original signature)
+cf65bf4 (HEAD -> main, extract-common-parts) extract-common-parts - Extract common part removing branch
+
 ## 참고 사이트
 
 - [Catalog of Refactorings](https://refactoring.com/catalog/)
