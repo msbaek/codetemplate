@@ -252,6 +252,7 @@ p10k configure
 - web search
 - file search
 - bookmarks
+  - ![bookmarks-01.png](../images/bookmarks-01.png)
 - clipboard history
 - snippets
 - system
