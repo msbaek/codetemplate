@@ -92,3 +92,4 @@ public void Total_Over_100_Gives_Five_Percent_Discount() {
 #### 설계 특성
 
 ![design-characteristics.png](design-characteristics.png)
+

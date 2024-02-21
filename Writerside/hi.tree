@@ -36,7 +36,6 @@
     </toc-element>
     <toc-element topic="Tools.md">
         <toc-element topic="Astronvim.md"/>
-        <toc-element topic="Terminal.md"/>
         <toc-element topic="IntelliJ.md"/>
     </toc-element>
     <toc-element topic="Books.md"/>
