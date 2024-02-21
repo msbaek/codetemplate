@@ -5,12 +5,13 @@
 ### Tyding { id="simle-tyding" }
 
 - 절차적, 명령형 스타일로 개발이 되었고, 테스트가 존재할 때
-  - 제일 먼저 이렇게 하는 이유
-    - 구현을 완료해봐야 **문제를 정확히 이해**하고, 사전에 **예측하기 어려운 이슈를 발견**할 수 있음
+    - 제일 먼저 이렇게 하는 이유
+        - 구현을 완료해봐야 **문제를 정확히 이해**하고, 사전에 **예측하기 어려운 이슈를 발견**할 수 있음
 
 1. Reorder - slide statements
 
     - reading / cohesion order
+    - `Move declaration of 'xxx' closer to usages`
 
 2. Chunk Statements
 
@@ -39,6 +40,16 @@
 
 ## Naming
 
+- 처음부터 좋은 이름이 떠오르지는 않는다.
+- 구현을 먼저 하면서 좋은 이름으로 계속 바꿔간다.
+    - 처음에 지은 나쁜 이름을 계속 유지하면 다른 사람(2주 후의 나)이 이해하기 어렵다.
+    - 커뮤니케이션하기 어려워진다
+
+### 규칙
+
+- factory method
+    - from: 인자가 1개
+    - of: 인자가 2개 이상
 - 상태 변경을 유발하는 메소드
     - markXXX
         - `Book::markIssued`: 대여됨으로 상태 변경
