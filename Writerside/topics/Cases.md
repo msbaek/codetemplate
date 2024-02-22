@@ -7,11 +7,12 @@
 - [tyding](Techniques.md#simle-tyding)
 
 - 메소드 추출에서 중요한 점
-  1. 의도를 나타내는 이름을 붙일 수 있나 ?
-     - 좋을 이름을 부여할 수 없다면 다음에 추출해야
-  2. 함께 추출할 코드가 있다면 함께 추출
-  3. [Composed Method](https://github.com/msbaek/memo/blob/master/refactoring-tech/composed_method.md), [SLAP](https://github.com/msbaek/memo/blob/master/refactoring-tech/composed_method.md#slapsingle-level-of-abstraction-principle) 를 지향하는 방향으로 메소드 추출
-     - 가독성, 유지보수성
+    1. 의도를 나타내는 이름을 붙일 수 있나 ?
+        - 좋을 이름을 부여할 수 없다면 다음에 추출해야
+    2. 함께 추출할 코드가 있다면 함께 추출
+    3. [Composed Method](https://github.com/msbaek/memo/blob/master/refactoring-tech/composed_method.md), [SLAP](https://github.com/msbaek/memo/blob/master/refactoring-tech/composed_method.md#slapsingle-level-of-abstraction-principle)
+       를 지향하는 방향으로 메소드 추출
+        - 가독성, 유지보수성
 
 ## Remove Tagging Variable
 
@@ -36,7 +37,8 @@
 
 - [Guard (computer science)](https://en.wikipedia.org/wiki/Guard_(computer_science))
 - [Replace Nested Conditional with Guard Clauses](https://refactoring.com/catalog/replaceNestedConditionalWithGuardClauses.html)
-- 
+-
+
 ```Java
 public void processOrder(Order order) {
     if (order != null) {
@@ -190,6 +192,32 @@ b19d5fe (HEAD -> split_by_levels_of_abstraction) add OrderValidatorTest  [Myeong
 d80da04 (tag: s_split_abstraction) add God, GodTest  [Myeongseok Baek]
 ```
 
+### split by levels of abstraction - mercury
+
+- port를 구현한 adapter에서 loop를 돌면서
+  - 3개의 도메인 객체에 대해서
+    - 도메인 객체 생성
+    - save domain 객체
+  - 를 반복하고 있음
+- 객체를 모두 생성해서 Value Object로 담아서 저장하는 로직에 전달하여
+- 빵 구조가 나오도록 개선
+
+```
+48b861c split-by-abstraction-layer-mercury - add required files
+f636402 split-by-abstraction-layer-mercury - slide statements for reading order
+d1f55a5 split-by-abstraction-layer-mercury - inline all
+57e3122 split-by-abstraction-layer-mercury - replate temp with query
+f225997 split-by-abstraction-layer-mercury - replace individual repo call with collection
+85e9a4a split-by-abstraction-layer-mercury - slide statement for SoC
+1021374 split-by-abstraction-layer-mercury - extract method createProductOption
+993ee5f split-by-abstraction-layer-mercury - extract method saveProductOption
+4e8e4e1 (HEAD -> split-by-abstraction-layer-mercury) split-by-abstraction-layer-mercury - extract delegate(domain service)
+```
+
+- 이후 split by abstraction layer 수행
+- adapter가 domain servicef를 호출하는 것은 이상
+- createProductOption을 Application Service(Use Case)로 이동
+
 ### split-by-abstraction-layer-inventory-transfer
 
 ```
@@ -258,12 +286,15 @@ e14b4be add class for extract value object
 ### From Primitive Obsession to Domain Modelling
 
 - Primitive obsession is a type of code smell that developers can’t identify intuitively.
-- It occurs when a primitive value controls the logic in a class and represents complex concepts or behaviors. In simple words, when a code relies too much on primitive values.
-- Using primitives for everything is certainly a bad practice. This leads to poor readability, validation, and abstraction.
+- It occurs when a primitive value controls the logic in a class and represents complex concepts or behaviors. In simple
+  words, when a code relies too much on primitive values.
+- Using primitives for everything is certainly a bad practice. This leads to poor readability, validation, and
+  abstraction.
 - Solutions
-  - Replace the data value with the object if the primitive fields logically belong together.
-  - ‘Introduce a parameter object’ to represent the data and clean up the code base.
-  - ‘Preserve the whole object’ when its state is needed together. Avoid extracting small parts of objects to pass around.
+    - Replace the data value with the object if the primitive fields logically belong together.
+    - ‘Introduce a parameter object’ to represent the data and clean up the code base.
+    - ‘Preserve the whole object’ when its state is needed together. Avoid extracting small parts of objects to pass
+      around.
 - [Understanding Code Smells and How to Avoid Them | by typo | Typo blog | Jan, 2024 | Medium](https://medium.com/beyond-the-code-by-typo/understanding-code-smells-and-how-to-avoid-them-7ea52c295734)
 - [From Primitive Obsession to Domain Modelling](https://blog.ploeh.dk/2015/01/19/from-primitive-obsession-to-domain-modelling/)
 
