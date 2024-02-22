@@ -40,6 +40,7 @@
     </toc-element>
     <toc-element topic="Books.md"/>
     <toc-element topic="Articles.md">
+        <toc-element topic="Branch-vs-Trunk-Based-Delivery.md"/>
         <toc-element topic="Advanced-TDD.md"/>
         <toc-element topic="GPT.md">
             <toc-element topic="MSA.md"/>
