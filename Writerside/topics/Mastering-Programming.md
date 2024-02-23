@@ -46,15 +46,15 @@
 ## Learning
 
 - Call your shot
-    - 코드를 실행하기 전에 어떤 일이 일어날지 예측해 보라
+    - **코드를 실행하기 전에 어떤 일이 일어날지 예측해 보라**
     - Before you run code, predict out loud exactly what will happen.
 - Concrete hypotheses
-    - 프로그램인 잘못 동작하는 경우, 수정하기 전에 무엇이 잘못되었다고 생각하는지 정확하게 설명해 보라
+    - **프로그램인 잘못 동작하는 경우, 수정하기 전에 무엇이 잘못되었다고 생각하는지 정확하게 설명해 보라**
     - 2가지 이상의 가설이 있는 경우 차별진단(differential diagnosis)을 찾아보라
     - When the program is misbehaving, articulate exactly what you think is wrong before making a change.
     - If you have two or more hypotheses, find a differential diagnosis.
 - Remove extraneous detail.
-    - 버그 리포팅을 할 때는 가장 짧은 재현 단계를 찾아보라
+    - **버그 리포팅을 할 때는 가장 짧은 재현 단계를 찾아보라**
     - 버그를 격리할 때는 가장 짧은 테스트 케이스를 찾아보라
     - 새로운 API를 사용할 때는 가장 기본적인 예제부터 시작하라
     - "이 모든 것들은 문제가 될 가능성이 낮아"라는 생각은 잘못된 가정일 경우 비용이 많이 드는 가정임
@@ -64,7 +64,7 @@
     - E.g. see a bug on mobile, reproduce it with curl
 
 - Multiple scales
-    - 스케일 간 자유롭게 이동하라
+    - **스케일 간 자유롭게 이동하라**
     - 테스트 문제가 아니라 설계 문제일 수도 있음
     - 기술적 문제가 아니라 사람의 문제일 수도 있음
     - Move between scales freely
