@@ -78,7 +78,7 @@
 
 @DisplayName("총 금액이 $100 초과 시 5% 할인 제공")
 @Test
-public void total_over_100_gives_five_percent_discount() {
+void total_over_100_gives_five_percent_discount() {
     ShoppingBasket basket = new ShoppingBasket();
     BasketItem itemA = new BasketItem("A", BigDecimal.valueOf(10));
     BasketItem itemB = new BasketItem("B", BigDecimal.valueOf(25));
@@ -170,7 +170,7 @@ public void totalOver100GivesFivePercentDiscount() {
 @Test
 public void emptyBasketContainsNothing() {
     ShoppingBasket basket = new ShoppingBasket();
-    assertThat(basket.getQuantity("C")).isEqualTo(0);
+    assertThat(basket.getQuantity("A")).isEqualTo(0);
 }
 ```
 
@@ -191,3 +191,6 @@ public void oneItemA() {
 ```
 
 - 모든 테스트 시나리오 리스트를 구현한 후에는 `@Disabled` 제거하고 이 테스트가 성공하도록 함
+
+## Using Co Pilot
+- 테스트 코드 상단에 테스트 시나리오 리스트를 작성해 놓으니 순차적으로 테스트를 추구할 때 Co Pilot이 테스트 코드를 제안해 줌
