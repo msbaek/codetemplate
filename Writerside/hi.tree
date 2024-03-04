@@ -25,6 +25,7 @@
         <toc-element topic="테스트-추가하기.md"/>
         <toc-element topic="TDD-Terms.md"/>
     </toc-element>
+    <toc-element topic="Design-Patterns.md"/>
     <toc-element topic="DDD.md">
     </toc-element>
     <toc-element topic="Spring.md">
