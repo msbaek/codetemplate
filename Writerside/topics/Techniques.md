@@ -40,11 +40,28 @@
 
 ## Naming
 
+- 의도를 드러내는 이름
 - 처음부터 좋은 이름이 떠오르지는 않는다.
 - 구현을 먼저 하면서 좋은 이름으로 계속 바꿔간다.
     - 처음에 지은 나쁜 이름을 계속 유지하면 다른 사람(2주 후의 나)이 이해하기 어렵다.
     - 커뮤니케이션하기 어려워진다
-
+- 정확하지만 추상적이여야
+    - process, handle, manage 등과 같이 광범위한 단어를 포함하는 이름이 많을 경우
+        - 이러한 이름이 정확한지
+        - 좀 더 구체적인 의미의 다른 단어로 바꿔야 하는지
+        - 등을 고려해야
+    - 명명은 구현 세부 사항을 너무 구체적으로 명시하지 말고,
+    - 작업 방법이 아닌 작업 자체만 명시해야
+- 매개변수가 많은 함수를 여러개로 나누는 경우
+ - `public User getUser(String id, String username, String telephone, String email, String uuid);`
+    ```java
+    // 여러 기능으로 분할
+    public User getUserById(String id);
+    public User getUserByUsername(String username);
+    public User getUserByTelephone(String telephone);
+    public User getUserByEmail(String email);
+    public User getUserByUuid(String uuid);
+    ```
 ### 규칙
 
 - factory method
