@@ -214,6 +214,8 @@ p10k configure
     - `marp -w --theme ~/theme/dracula.css xxx.md`
 - neovim
 - ngrok
+- orbstack
+  - docker desktop 대용
 - rectangle
 - [ripgrep](https://blog.burntsushi.net/ripgrep)
     - ripgrep (rg) recursively searches the current directory for a regex pattern.
