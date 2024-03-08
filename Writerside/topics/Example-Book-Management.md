@@ -65,68 +65,6 @@
 
 ```plantuml
 @startuml
-class Book {
-+Long id
-+String title
-+String author
-+Date publishDate
-}
-
-interface BookRepository {
-+save(Book book): Book
-+findById(Long id): Optional<Book>
-+delete(Book book): void
-+findAll(): List<Book>
-}
-
-class BookService {
--BookRepository repository
-+addBook(Book book): Book
-+updateBook(Long id, Book book): Book
-}
-
-class BookController {
--BookService bookService
-+createBook(BookDto bookDto): BookResponse
-+updateBook(Long id, BookDto bookDto): BookResponse
-}
-
-BookController --> BookService : uses
-BookService --> BookRepository : uses
-@enduml
-```
-
-## 도서 관리 시스템의 불변식
-
-- 도서별 재고 관리
-    - 각 도서의 제목과 판본에 대해 별도의 재고를 관리합니다. 즉, 같은 제목의 도서라도 다른 판본이면 별개로 관리됩니다.
-- 도서 대출 가능 조건
-    - 도서는 재고가 남아있는 경우에 한해 대출할 수 있습니다. 한 권의 도서에 대해 여러 사용자가 대출을 원할 경우, 재고 수량에 따라 대출이 제한됩니다.
-- 재고 수량 관리
-    - 특정 도서의 재고 수량은 등록된 도서의 총 수량을 초과할 수 없으며, 대출 및 반납이 발생할 때마다 실시간으로 업데이트되어야 합니다. 이는 도서가 대출되었을 때 재고를 감소시키고, 반납될 때 재고를
-      증가시키는 로직으로 관리됩니다.
-- 도서 정보(제목, 저자 등)는 고유해야 합니다.
-    - 시스템 내에서 도서 정보는 유일무이해야 합니다. 똑같은 제목과 저자로 된 도서가 여러 개 등록되어 있을 수는 있지만, 각각의 도서는 고유한 식별자(ID)를 가지고 있어야 합니다.
-- 주요 클래스 및 관계
-
-  | 클래스 | 설명 |
-                  | --- | --- |
-  | Book | 도서 정보를 나타내는 기본 클래스입니다. 제목, 저자, 출판일 등의 필드를 포함합니다. |
-  | BookCopy | Book의 실제 복사본을 나타냅니다. 각 복사본은 고유한 ID를 가지며, 대출 상태를 관리합니다. |
-  | BookInventory | 도서의 재고 관리를 담당합니다. 특정 Book의 모든 BookCopy를 추적하고, 재고 수량을 관리합니다. |
-  | Loan | 도서 대출 정보를 나타내는 클래스입니다. 대출한 BookCopy와 대출자 정보, 대출 기간 등을 포함합니다. |
-  | BookRepository | 도서 정보에 대한 저장소 역할을 하는 인터페이스입니다. |
-  | BookInventoryRepository | 도서 재고에 대한 저장소 역할을 하는 인터페이스입니다. |
-  | LoanRepository | 대출 정보에 대한 저장소 역할을 하는 인터페이스입니다. |
-  | BookService | 도서 관련 비즈니스 로직을 처리하는 서비스 클래스입니다. 도서 추가, 도서 정보 수정, 도서 재고 관리 등의 기능을 제공합니다. |
-  | LoanService | 도서 대출과 관련된 비즈니스 로직을 처리하는 서비스 클래스입니다. 도서 대출, 반납 등의 기능을 제공합니다. |
-  | BookController | 외부에서의 도서 관련 요청을 처리하는 컨트롤러 클래스입니다. |
-  | LoanController | 외부에서의 도서 대출 및 반납 요청을 처리하는 컨트롤러 클래스입니다. |
-
-- 제약조건이 반영된 클래스 다이어그램
-
-```plantuml
-@startuml
 ' 클래스 설명을 추가하기 위한 주석 또는 노트 사용
 
 class Book {
@@ -168,77 +106,105 @@ note right of Loan
   도서 대출 정보(대출된 복사본, 대출/반납 일자 등)
 end note
 
-interface BookRepository {
-    +save(Book book): Book
-    +findById(Long id): Optional<Book>
-}
-note right of BookRepository
-  도서 정보 저장소 인터페이스
-end note
+'interface BookRepository {
+'    +save(Book book): Book
+'    +findById(Long id): Optional<Book>
+'}
+'note right of BookRepository
+'  도서 정보 저장소 인터페이스
+'end note
 
-interface BookInventoryRepository {
-    +findByBook(Book book): BookInventory
-    +save(BookInventory inventory): BookInventory
-}
-note right of BookInventoryRepository
-  도서 재고 정보 저장소 인터페이스
-end note
+'interface BookInventoryRepository {
+'    +findByBook(Book book): BookInventory
+'    +save(BookInventory inventory): BookInventory
+'}
+'note right of BookInventoryRepository
+'  도서 재고 정보 저장소 인터페이스
+'end note
 
-interface LoanRepository {
-    +save(Loan loan): Loan
-    +findByBookCopy(BookCopy copy): Optional<Loan>
-}
-note right of LoanRepository
-  대출 정보 저장소 인터페이스
-end note
+'interface LoanRepository {
+'    +save(Loan loan): Loan
+'    +findByBookCopy(BookCopy copy): Optional<Loan>
+'}
+'note right of LoanRepository
+'  대출 정보 저장소 인터페이스
+'end note
 
-class BookService {
-    -BookRepository bookRepository
-    -BookInventoryRepository bookInventoryRepository
-    +addBook(Book book): Book
-    +updateBookInfo(Long id, Book updatedBook): Book
-    +checkInventory(Book book): int
-}
-note right of BookService
-  도서 관련 비즈니스 로직 처리
-end note
+'class BookService {
+'    -BookRepository bookRepository
+'    -BookInventoryRepository bookInventoryRepository
+'    +addBook(Book book): Book
+'    +updateBookInfo(Long id, Book updatedBook): Book
+'    +checkInventory(Book book): int
+'}
+'note right of BookService
+'  도서 관련 비즈니스 로직 처리
+'end note
 
-class LoanService {
-    -LoanRepository loanRepository
-    -BookInventoryRepository bookInventoryRepository
-    +loanBookCopyToUser(BookCopy copy, User user): Loan
-    +returnBookCopy(BookCopy copy): Loan
-}
-note right of LoanService
-  도서 대출 관련 비즈니스 로직 처리
-end note
+'class LoanService {
+'    -LoanRepository loanRepository
+'    -BookInventoryRepository bookInventoryRepository
+'    +loanBookCopyToUser(BookCopy copy, User user): Loan
+'    +returnBookCopy(BookCopy copy): Loan
+'}
+'note right of LoanService
+'  도서 대출 관련 비즈니스 로직 처리
+'end note
 
-class BookController {
-    -BookService bookService
-}
-note right of BookController
-  도서 관련 외부 요청 처리
-end note
-
-class LoanController {
-    -LoanService loanService
-}
-note right of LoanController
-  도서 대출 및 반납 관련 외부 요청 처리
-end note
+'class BookController {
+'    -BookService bookService
+'}
+'note right of BookController
+'  도서 관련 외부 요청 처리
+'end note
+'
+'class LoanController {
+'    -LoanService loanService
+'}
+'note right of LoanController
+'  도서 대출 및 반납 관련 외부 요청 처리
+'end note
 
 ' 클래스 간 관계 표현
 Book --> BookCopy : "has >"
 BookInventory o-- Book : "tracks >"
 BookInventory "1" -- "*" BookCopy : "contains"
 Loan --> BookCopy : "loans >"
-BookService --> BookRepository : "uses"
-BookService --> BookInventoryRepository : "uses"
-LoanService --> LoanRepository : "uses"
-LoanService --> BookInventoryRepository : "uses"
+'BookService --> BookRepository : "uses"
+'BookService --> BookInventoryRepository : "uses"
+'LoanService --> LoanRepository : "uses"
+'LoanService --> BookInventoryRepository : "uses"
 
 @enduml
 ```
+## 도서 관리 시스템의 불변식
+
+- 도서별 재고 관리
+    - 각 도서의 제목과 판본에 대해 별도의 재고를 관리합니다. 즉, 같은 제목의 도서라도 다른 판본이면 별개로 관리됩니다.
+- 도서 대출 가능 조건
+    - 도서는 재고가 남아있는 경우에 한해 대출할 수 있습니다. 한 권의 도서에 대해 여러 사용자가 대출을 원할 경우, 재고 수량에 따라 대출이 제한됩니다.
+- 재고 수량 관리
+    - 특정 도서의 재고 수량은 등록된 도서의 총 수량을 초과할 수 없으며, 대출 및 반납이 발생할 때마다 실시간으로 업데이트되어야 합니다. 이는 도서가 대출되었을 때 재고를 감소시키고, 반납될 때 재고를
+      증가시키는 로직으로 관리됩니다.
+- 도서 정보(제목, 저자 등)는 고유해야 합니다.
+    - 시스템 내에서 도서 정보는 유일무이해야 합니다. 똑같은 제목과 저자로 된 도서가 여러 개 등록되어 있을 수는 있지만, 각각의 도서는 고유한 식별자(ID)를 가지고 있어야 합니다.
+- 주요 클래스 및 관계
+
+  | 클래스 | 설명 |
+                  | --- | --- |
+  | Book | 도서 정보를 나타내는 기본 클래스입니다. 제목, 저자, 출판일 등의 필드를 포함합니다. |
+  | BookCopy | Book의 실제 복사본을 나타냅니다. 각 복사본은 고유한 ID를 가지며, 대출 상태를 관리합니다. |
+  | BookInventory | 도서의 재고 관리를 담당합니다. 특정 Book의 모든 BookCopy를 추적하고, 재고 수량을 관리합니다. |
+  | Loan | 도서 대출 정보를 나타내는 클래스입니다. 대출한 BookCopy와 대출자 정보, 대출 기간 등을 포함합니다. |
+  | BookRepository | 도서 정보에 대한 저장소 역할을 하는 인터페이스입니다. |
+  | BookInventoryRepository | 도서 재고에 대한 저장소 역할을 하는 인터페이스입니다. |
+  | LoanRepository | 대출 정보에 대한 저장소 역할을 하는 인터페이스입니다. |
+  | BookService | 도서 관련 비즈니스 로직을 처리하는 서비스 클래스입니다. 도서 추가, 도서 정보 수정, 도서 재고 관리 등의 기능을 제공합니다. |
+  | LoanService | 도서 대출과 관련된 비즈니스 로직을 처리하는 서비스 클래스입니다. 도서 대출, 반납 등의 기능을 제공합니다. |
+  | BookController | 외부에서의 도서 관련 요청을 처리하는 컨트롤러 클래스입니다. |
+  | LoanController | 외부에서의 도서 대출 및 반납 요청을 처리하는 컨트롤러 클래스입니다. |
+
+- 제약조건이 반영된 클래스 다이어그램
 
 ## 도서 등록하기 유스케이스 시나리오
 
@@ -588,42 +554,6 @@ public class BookService {
             throw new DuplicateBookException("The book already exists.");
         }
         return bookRepository.save(book);
-    }
-}
-```
-
-### Domain Classes
-
-#### Book
-
-```java
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import java.util.Date;
-
-@Entity
-@Getter
-public class Book {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String title;
-    private String author;
-    private LocalDate publishDate;
-    private int quantity; // 재고 수량
-
-    protected Book() {
-    }
-
-    public Book(String title, String author, Date publishDate, int quantity) {
-        this.title = title;
-        this.author = author;
-        this.publishDate = publishDate;
-        this.quantity = quantity;
     }
 }
 ```
