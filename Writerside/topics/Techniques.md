@@ -178,7 +178,8 @@
 - CombinatorialApprovals.verifyAllCombinations이 이 메소드를 호출하도록
 
 ## Approval Test를 위한 Printer
-
+- [Feature/gms 2572 delta update of picking group #1255](https://github.com/HMInternational/gms-java-api/pull/1255/files#diff-62118102df5985db1fa24d98e3f674db22f15f050a5d13f6df8305c41a5d50ef)
+- ![before-after-approvaltest.png](../images/before-after-approvaltest.png)
 ## Tips
 
 ### 반드시 단순해야 하는 구문들

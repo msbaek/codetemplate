@@ -4,9 +4,7 @@
 
 ## 어플리케이션 개요에 대한 설명 및 요구사항
 
-- controller → application servier → domain(entity, value object, domain service, repository interface) → repository
-  implementation
-  의 구조를 갖는 spring-boot, jpa 등을 이용한 웹 어플리케이션 예제를 만들고 싶어
+- controller → application servier → domain(entity, value object, domain service, repository interface) → repository implementation 의 구조를 갖는 spring-boot, jpa 등을 이용한 웹 어플리케이션 예제를 만들고 싶어
 
 1. outside in TDD 방식으로 controller에서 domain으로 들어가면서 iteratively discover interface하고,
 2. inside out으로 domain에서 controller로 나오면서 1에서 사용한 mock 객체들을 real 객체로 치환
