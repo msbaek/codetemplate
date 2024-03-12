@@ -44,7 +44,9 @@
 - 구현을 먼저 하면서 좋은 이름으로 계속 바꿔간다.
     - 처음에 지은 나쁜 이름을 계속 유지하면 다른 사람(2주 후의 나)이 이해하기 어렵다.
     - 커뮤니케이션하기 어려워진다
-
+- invoice → invocing
+  - 패키지명을 명사가 아니라 동사구로
+  - BC로 인해 invoicing에 있는 Customer는 InvoicingCustomer
 ### 규칙
 
 - factory method
