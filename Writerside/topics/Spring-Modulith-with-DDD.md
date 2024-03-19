@@ -2,8 +2,8 @@
 
 ## Building Modular Monolith Applications with Spring Boot and Domain Driven Design
 
-- https://itnext.io/building-modular-monolith-applications-with-spring-boot-and-domain-driven-design-d3299b300850
-- https://github.com/xsreality/spring-modulith-with-ddd/tree/part-1-ddd-solution
+- [Building Modular Monolith Applications with Spring Boot and Domain Driven Design | by Abhinav Sonkar | ITNEXT](https://itnext.io/building-modular-monolith-applications-with-spring-boot-and-domain-driven-design-d3299b300850)
+- [xsreality/spring-modulith-with-ddd at part-1-ddd-solution](https://github.com/xsreality/spring-modulith-with-ddd/tree/part-1-ddd-solution)
 
 ### 모듈
 
@@ -75,6 +75,7 @@
 - Entity
 
 ```Java 
+
 @Entity
 @Getter
 @NoArgsConstructor
@@ -95,8 +96,8 @@ class Book {
     @Version
     private Long version;
 
-    /* aggregate root 
-     * any changes to this aggregate (e.g. modifying the status of the Book) must happen 
+    /* aggregate root
+     * any changes to this aggregate (e.g. modifying the status of the Book) must happen
      * via the Book entity only and limited to the module itself
      */
     public Book(String title, Barcode inventoryNumber, String isbn, Author author) {
@@ -129,9 +130,11 @@ class Book {
     }
 
     /* thress value objects */
-    public record Barcode(String barcode) { }
+    public record Barcode(String barcode) {
+    }
 
-    public record Author(String name) { }
+    public record Author(String name) {
+    }
 
     public enum BookStatus {
         AVAILABLE, ISSUED
@@ -145,7 +148,9 @@ class Book {
 ```Java
 interface BookRepository extends JpaRepository<Book, Long> {
     Optional<Book> findByIsbn(String isbn);
+
     Optional<Book> findByInventoryNumber(Book.Barcode inventoryNumber);
+
     List<Book> findByStatus(Book.BookStatus status);
 }
 ```
@@ -153,6 +158,7 @@ interface BookRepository extends JpaRepository<Book, Long> {
 - Bookmanagement Service
 
 ```Java
+
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -214,6 +220,7 @@ public class BookManagement {
 - REST API for clients
 
 ```Java
+
 @RestController
 @RequiredArgsConstructor
 class BookController {
@@ -261,6 +268,7 @@ class BookController {
 - 오래 지속되는 엔터티임
 
 ```Java
+
 @Entity
 @Getter
 @Setter
@@ -338,6 +346,7 @@ public class Loan {
 #### LoanManagement Service
 
 ```Java
+
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -478,6 +487,7 @@ public class LoanManagement {
 - LoanManagement 서비스가 유스케이스가 실행됨에 따라 이벤트를 발생시킴
 
 ```Java
+
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -509,10 +519,10 @@ public class LoanManagement {
     }
 }
 
-public record BookPlacedOnHold(Long bookId, 
-                               String isbn, 
+public record BookPlacedOnHold(Long bookId,
+                               String isbn,
                                String inventoryNumber,
-                               Long patronId, 
+                               Long patronId,
                                LocalDate dateOfHold) {
 }
 ```
@@ -520,6 +530,7 @@ public record BookPlacedOnHold(Long bookId,
 - InventoryManagement 서비스는 이벤트를 리슨하고 책을 보류(hold) 상태로 만듦
 
 ```Java
+
 @Transactional
 @Service
 @RequiredArgsConstructor
@@ -556,6 +567,7 @@ public class InventoryManagement {
 - 모듈 간이 통신에 이벤트를 도입하여 독립된 테스트가 가능해짐
 
 ```Java
+
 @Transactional
 @ApplicationModuleTest // automatically restricts the Spring Application context to the package (representing the module) under test and nothing else
 class LoanIntegrationTests {
@@ -635,8 +647,13 @@ class SpringModulithTests {
 - 모듈의 내부 클래스에 접근하면 아래와 같은 예외가 발생
 
 ```java
-org.springframework.modulith.core.Violations: - Module 'borrow' depends on non-exposed type example.catalog.internal.BookAddedToCatalog within module 'catalog'!
-BookAddedToCatalog declares parameter BookAddedToCatalog.on(BookAddedToCatalog) in (InventoryManagement.java:0)
+org.springframework.modulith.core.Violations:-Module 'borrow'
+depends on
+non-
+exposed type
+example.catalog.internal.BookAddedToCatalog within
+module 'catalog'!
+        BookAddedToCatalog declares parameter BookAddedToCatalog.on(BookAddedToCatalog)in(InventoryManagement.java:0)
 ```
 
 ### 모듈 문서화
@@ -660,6 +677,29 @@ class SpringModulithTests {
 - The test also generates documentation snippets for each module (bounded context).
 - ![module-canvas.png](../images/module-canvas.png)
 
+## Adopting Domain-First Thinking in Modular Monolith with Hexagonal Architecture
+
+- [Adopting Domain-First Thinking in Modular Monolith with Hexagonal Architecture | by Abhinav Sonkar | Feb, 2024 | ITNEXT](https://itnext.io/adopting-domain-first-thinking-in-modular-monolith-with-hexagonal-architecture-f9e4921ac18d)
+    - https://github.com/xsreality/spring-modulith-with-ddd/tree/part-3-hexagonal-architecture
+- dto, application이 applicaiton 패키지에
+    - dto#from(domainModel) : factory method
+- domain model에 value object(inner record, public)이 존재
+    - ID, 생성자에 인자로 전달할 레코드 등
+- persistence entity와 domain model 분리
+    - persistence에 from/to domain model 기능 존재
+- Dto factory method에 domain model을 전달
+```java
+class Hold {
+    public static Hold placeHold(PlaceHold command) {
+        return new Hold(command);
+    }
+
+    public Hold then(UnaryOperator<Hold> function) {
+        return function.apply(this);
+    }
+}
+```
+
 ## 메모
 
 - 테이블에 constraint 걸기
@@ -668,7 +708,7 @@ class SpringModulithTests {
 - Entity의 속성을 Value Object로 매핑하기
 
 ```java
-class Book { 
+class Book {
     @Embedded
     private Barcode inventoryNumber;
     @Embedded
@@ -677,9 +717,13 @@ class Book {
     @Enumerated(EnumType.STRING)
     private BookStatus status;
 
-    public record Barcode(String barcode) { }
-    public record Author(String name) { }
-    public enum BookStatus { AVAILABLE, ISSUED }
+    public record Barcode(String barcode) {
+    }
+
+    public record Author(String name) {
+    }
+
+    public enum BookStatus {AVAILABLE, ISSUED}
 }
 ```
 
@@ -717,13 +761,13 @@ class Book {
         - 이 인터페이스는 모든 완료되지 않은 이벤트 발행물에 액세스하여 지정된 조건과 일치하거나 원래 발행 날짜를 기준으로 지정된 기간보다 오래된 발행물을 다시 제출할 수 있도록 함
 
 - 이벤트 발행 로그 활성화
-  - EventPublicationRepository(spring-modulith-starter-jpa)가 제공됨
-  - spring.modulith.events.jdbc-schema-initialization.enabled=true
+    - EventPublicationRepository(spring-modulith-starter-jpa)가 제공됨
+    - spring.modulith.events.jdbc-schema-initialization.enabled=true
 
 - Externalizing Events
-  - Kafka, AMQP, JMS, SQS, SNS
+    - Kafka, AMQP, JMS, SQS, SNS
 
 - Bootstrap Modes
-  - STANDALONE(default): Runs the current module only.
-  - DIRECT_DEPENDENCIES: Runs the current module as well as all modules the current one directly depends on.
-  - ALL_DEPENDENCIES: Runs the current module and the entire tree of modules depended on.
+    - STANDALONE(default): Runs the current module only.
+    - DIRECT_DEPENDENCIES: Runs the current module as well as all modules the current one directly depends on.
+    - ALL_DEPENDENCIES: Runs the current module and the entire tree of modules depended on.

@@ -36,6 +36,8 @@
   ```
 - [Annotations on the same line – IDEs Support (IntelliJ Platform) | JetBrains](https://intellij-support.jetbrains.com/hc/en-us/community/posts/206947645-Annotations-on-the-same-line)
 - ![intellij-annotations.png](../images/intellij-annotations.png)
+- Comment alignment
+  - ![comment-alignment.png](../images/comment-alignment.png)
 
 ### Edit
 
