@@ -1055,6 +1055,8 @@ class Hold {
 
 ----
 
+![modulith-hexagonal.png](../images/modulith-hexagonal.png)
+
 ```plantuml
 @startuml
 

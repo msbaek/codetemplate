@@ -20,6 +20,8 @@
     - ![color-under-cursor.png](../images/color-under-cursor.png)
 - Show BreadCrumbs
     - ![show-breadcrumbs.png](../images/show-breadcrumbs.png)
+- tooltip이 안보일 때
+  - `Preferences | Appearance & Behavior | Appearance, Accessibility > Support screen readers` off
 
 ### Formatting
 
@@ -68,6 +70,17 @@
     - project view에서 파일 선택하고 spacebar
 - Locate Duplicates...
 
+## UML
+- You can view your VCS local changes as a diagram. Select VCS | Uncommitted Changes| Show Local Changes as UML - `⌘⌥⇧D`
+- list up element in diagram -  `⌘F12`
+- When you click through classes in the graph, IntelliJ IDEA greys out classes that do not reside in the same package.
+- You can select the the Edge Creation mode button icon on the diagram toolbar to draw relationship links between elements in your graph. To delete the existing links, select the ones you don't need and press ⌫ IntelliJ IDEA will update the source code accordingly.
+- Show Implementations ⌘⌥B, Show Parents ⌘⌥P
+- Analyze graph: 클래스들을 선택하고, 우클릭해서 Analyze graph
+- Measure diagram centrality
+  - You can use this action to identify the important nodes in the graph.
+  - In the diagram editor, right-click anywhere in the editor to open the context menu.
+  - From the context menu, select Analyze Graph | Measure Centrality.
 ## Plugins
 
 - [IdeaVim - IntelliJ IDEs Plugin | Marketplace](https://plugins.jetbrains.com/plugin/164-ideavim)
