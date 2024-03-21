@@ -681,24 +681,449 @@ class SpringModulithTests {
 
 - [Adopting Domain-First Thinking in Modular Monolith with Hexagonal Architecture | by Abhinav Sonkar | Feb, 2024 | ITNEXT](https://itnext.io/adopting-domain-first-thinking-in-modular-monolith-with-hexagonal-architecture-f9e4921ac18d)
     - https://github.com/xsreality/spring-modulith-with-ddd/tree/part-3-hexagonal-architecture
-- dto, application이 applicaiton 패키지에
-    - dto#from(domainModel) : factory method
-- domain model에 value object(inner record, public)이 존재
-    - ID, 생성자에 인자로 전달할 레코드 등
-- persistence entity와 domain model 분리
-    - persistence에 from/to domain model 기능 존재
-- Dto factory method에 domain model을 전달
+- Spring Data Repository: Java 인터페이스로 정의되지만 동적 프록시를 통해 구현을 결합하므로 실제로는 인터페이스가 아님
+    - ![layer_in_hexagonal.png](../images/layer_in_hexagonal.png)
+    - 의존성을 반전시키는 데 사용되는 인터페이스는 포트, 인터페이스 구현은 어댑터
+    - 도메인 모델에 의해 구동되므로 구동형(driven) 또는 보조형(secondary)
+    - 유스 케이스를 구현하는 데 사용되는 애플리케이션 서비스도 포트
+        - 차이점은 Java 인터페이스가 아니라 일반 클래스라는 점
+        - 또한 사용 사례(REST API, GraphQL, Lambda 등)에 액세스하기 위해 기술을 결합하는 해당 어댑터도 있음
+        - 이러한 포트와 어댑터는 도메인 모델을 사용하므로 드라이버 또는 기본 이라고도 함
+        - 그들은 우리 모델의 사용을 주도함
+    - Ports are not always interfaces and Adapters are not always implementations
+        - Primary port can be a class while Primary Adapter uses this class
+        - Secondary port must be an interface while Secondary adapter its implementation to inverse the dependency.
+        - ![primary-port-adapter.png](../images/primary-port-adapter.png)
+        - ![inside-outside-of-architecture](../images/inside-outside-of-architecture.png)
+
+### 이러한 아키텍처의 장점
+
+- Core Business Logic is free of implementation details
+    - 새로운 기능 요청을 작성해야 합니까? 이를 도메인 모델에 구현하고 단위 테스트를 통해 검증합니다. Spring Boot 또는 Hibernate를 업데이트해야 합니까? 걱정하지 마세요. 도메인 모델은 영향을
+      받지 않습니다.
+- Domain Model drives the implementation
+- 도메인 모델은 아키텍처의 핵심입니다. 다른 모든 것은 도메인 모델을 따릅니다. 이는 비즈니스 로직의 구현을 주도합니다. 이전에 구현을 주도했던 데이터 모델은 이제 지속성에만 관련된 사소한 세부 사항입니다. 기타
+  인프라 문제(REST API가 필요하고, 야간 점검을 수행하기 위한 스케줄러가 필요하며, AWS Lambda를 트리거해야 함)는 모두 도메인 모델과 관련이 없습니다.
+- Delayed Decisions
+- 사용 사례에 Relational을 사용해야 할지, NoSQL을 사용해야 할지 잘 모르시나요? REST와 GraphQL을 사용하는 것에 대한 질문에 설계자가 돌아오지 않았나요? 이것이 비즈니스 로직 구현을
+  중단해서는 안 됩니다.
+
+### The Borrow Bounded Context (implemented with Hexagonal Architecture)
+
+- organize the Borrow module with below package structure
+- ![borrow-module-with-hexagonal.png](../images/borrow-module-with-hexagonal.png)
+    - application and domain package represent the “inside” of the Hexagon while infrastructure package represents the
+      “outside” of the Hexagon.
+- 패키지에 관해 준수하려는 규칙
+    - domain package
+        - will contain the domain models (Aggregates, Entities, Value Objects) and Secondary / Driven ports that provide
+          an interface for infrastructure to implement
+        - We will restrict ourselves to only use standard Java, Lombok (to reduce verbose code) and JMolecules (to
+          document stereotypes) libraries only.
+    - application package
+        - contain Primary / Driver ports that implement the use cases of the application
+        - We will allow ourselves to use Spring @Transactional and Modulith @ApplicationModuleListener annotations.
+    - infrastructure package
+        - contain the code to build the REST APIs and JPA adapters
+        - This is the Wild West, the outside.
+        - No restrictions apply, all libraries are fair game here.
+
+#### use case: placing hold on a book
+
+- Use Case
+  ```java
+  @PrimaryPort
+  public class CirculationDesk {
+    
+      private final BookRepository books;
+      private final HoldRepository holds;
+      private final HoldEventPublisher eventPublisher;
+
+      @Transactional
+      public HoldDto placeHold(PlaceHold command) {
+          books.findAvailableBook(command.inventoryNumber())
+                  .orElseThrow(() -> new IllegalArgumentException("Book not found"));
+
+          return Hold.placeHold(command)
+                  .then(holds::save)
+                  .then(eventPublisher::holdPlaced)
+                  .to(HoldDto::from);
+      }
+    
+      record PlaceHold(Barcode inventoryNumber, 
+                       String patronId, 
+                       LocalDate dateOfHold) {
+      }
+  }  
+  ```
+- To inverse the dependency, we introduce a Repository interface (not to be confused with Spring Data) for all
+  Aggregates.
+  ```java
+  @SecondaryPort
+  interface BookRepository {
+      Optional<Book> findAvailableBook(Book.Barcode inventoryNumber);
+      Optional<Book> findOnHoldBook(Book.Barcode inventoryNumber);
+      Book save(Book book);
+      Optional<Book> findByBarcode(String barcode);
+  }
+
+  @SecondaryPort
+  interface HoldRepository {
+      Hold save(Hold hold);
+      Optional<Hold> findById(Hold.HoldId id);
+      List<Hold> activeHolds();
+  }
+  ```
+- Triggering Domain Events from Aggregates
+    - One outcome of a use case is to persist the updated state of the Aggregate
+        - Another outcome can be to fire a domain event so that other modules in the monolith (or other aggregates in
+          the same module) can react on it.
+    - Both persisting the aggregate (using Repository) and firing an event (using Event Publisher) are secondary/driven
+      ports in Hexagonal architecture
+        - The implementation is irrelevant to the business logic.
+    - An event BookPlacedOnHold is fired after the execution of our use case
+        - This event is consumed by the Book aggregate to update the status of the book in the database
+        - The handling of the event is the responsibility of the primary/driver port as it is core part of the business
+          logic.
+      ```java
+      // the event publisher interface with no implementation knowledge 
+      // of how the event is actually published.
+      @SecondaryPort
+      public interface HoldEventPublisher {
+  
+          void holdPlaced(BookPlacedOnHold event);
+  
+          default Hold holdPlaced(Hold hold) {
+              BookPlacedOnHold event = new BookPlacedOnHold(hold.getId().id(), hold.getOnBook().barcode(), hold.getDateOfHold());
+              this.holdPlaced(event);
+              return hold;
+          }
+      }
+  
+      // the event handler using Spring Modulith listener 
+      // to reliably react to the event.
+      @PrimaryPort
+      class CirculationDeskEventHandler {
+  
+          private final BookRepository books;
+          private final HoldEventPublisher eventPublisher;
+  
+          @ApplicationModuleListener
+          public void handle(BookPlacedOnHold event) {
+              books.findAvailableBook(new Book.Barcode(event.inventoryNumber()))
+                      .map(Book::markOnHold)
+                      .map(books::save)
+                      .orElseThrow(() -> new IllegalArgumentException("Duplicate hold?"));
+          }
+      }
+      ```
+- Unit Testing the “Inside” (Business Logic) in Hexagonal
+    - ![unit-test-in-hexagonal.png](../images/unit-test-in-hexagonal.png)
+    - A big advantage of implementing business logic without framework dependencies
+        - able to unit test the code without needing integration tests.A big advantage of implementing business logic
+          without framework dependencies is to be able to unit test the code without needing integration tests.
+      ```java
+      class CirculationDeskTest {
+          CirculationDesk circulationDesk; // Application Service
+          BookRepository bookRepository; // Secondary Port
+          HoldRepository holdRepository; // Secondary Port
+  
+          @BeforeEach
+          void setUp() {
+              bookRepository = new InMemoryBooks();
+              holdRepository = new InMemoryHolds();
+              circulationDesk = new CirculationDesk(bookRepository, holdRepository, new InMemoryHoldsEventPublisher());
+          }
+  
+          @Test
+          void patronCanPlaceHold() {
+              var command = new Hold.PlaceHold(new Book.Barcode("12345"), LocalDate.now());
+              var holdDto = circulationDesk.placeHold(command);
+              assertThat(holdDto.getBookBarcode()).isEqualTo("12345");
+              assertThat(holdDto.getDateOfHold()).isNotNull();
+          }
+  
+          @Test
+          void bookStatusUpdatedWhenPlacedOnHold() {
+              var command = new Hold.PlaceHold(new Book.Barcode("12345"), LocalDate.now());
+              var hold = Hold.placeHold(command);
+              circulationDesk.handle(new BookPlacedOnHold(hold.getId().id(), hold.getOnBook().barcode(), hold.getDateOfHold()));
+              //noinspection OptionalGetWithoutIsPresent
+              var book = bookRepository.findByBarcode("12345").get();
+              assertThat(book.getStatus()).isEqualTo(ON_HOLD);
+          }
+      }
+  
+      // Test Fixture (acts as Secondary Adapter implementing the Secondary Port)
+      class InMemoryBooks implements BookRepository {
+          private final Map<String, Book> books = new HashMap<>();
+  
+          public InMemoryBooks() {
+              var booksToAdd = List.of(
+                      Book.addBook(new Book.AddBook(new Book.Barcode("12345"), "A famous book", "92972947199")),
+                      Book.addBook(new Book.AddBook(new Book.Barcode("98765"), "Another famous book", "98137674132"))
+              );
+              booksToAdd.forEach(book -> books.put(book.getInventoryNumber().barcode(), book));
+          }
+  
+          ...
+      }
+  
+      // Test Fixture (acts as Secondary Adapter implementing the Secondary Port)
+      class InMemoryHolds implements HoldRepository {
+        // similar to InMemoryBooks above
+        ...
+      }
+      ```
+        - Since our domain model is relying on an interface for persisting the aggregate or triggering an event, the
+          unit test needs a test fixture to be able to execute the interface methods. An implementation for every
+          Secondary/Driven ports is required for the unit tests to work.
+- Unit Testing the Architecture rules
+  ```java
+  @AnalyzeClasses(packages = "example.catalog")
+  public class CatalogJMoleculesTests {
+
+      @ArchTest
+      ArchRule dddRules = JMoleculesDddRules.all();
+
+      @ArchTest
+      ArchRule layering = JMoleculesArchitectureRules.ensureLayering();
+  }
+
+  @AnalyzeClasses(packages = "example.borrow")
+  public class BorrowJMoleculesTests {
+
+      @ArchTest
+      ArchRule dddRules = JMoleculesDddRules.all();
+
+      @ArchTest
+      ArchRule hexagonal = JMoleculesArchitectureRules.ensureHexagonal();
+  }
+  ```
+- Integration Testing the “Outside” in Hexagonal
+    - The outside where technologies interface with our domain model should be tested with Integration test to verify
+      their behaviour
+  ```java
+  // from CirculationDeskIT
+  @Test
+  void patronCanPlaceHold(Scenario scenario) {
+      var command = new Hold.PlaceHold(new Book.Barcode("13268510"), LocalDate.now());
+      scenario.stimulate(() -> circulationDesk.placeHold(command))
+              .andWaitForEventOfType(BookPlacedOnHold.class)
+              .toArriveAndVerify((event, dto) -> {
+                  assertThat(event.inventoryNumber()).isEqualTo("13268510");
+              });
+  }
+
+  // from CirculationDeskControllerIT
+  @Test
+  void placeHoldRestCall() throws Exception {
+      mockMvc.perform(post("/borrow/holds")
+                      .contentType(MediaType.APPLICATION_JSON)
+                      .content("""
+                              {
+                                "barcode": "64321704",
+                                "patronId": 5
+                              }
+                              """))
+              .andExpect(status().isOk());
+  }
+  ```
+- Visualizing Class Stereotypes with jMolecules
+    - [jMolecules support - IntelliJ IDEs Plugin | Marketplace](https://plugins.jetbrains.com/plugin/15166-jmolecules-support)
+
+### Avoid Purist implementations of Hexagonal architecture
+
+- Hexagon 내부는 핵심 비즈니스 로직 구현으로 육각형 외부에서 사용되는 프레임워크와 기술이 없어야 합니다.
+    - 나는 이 규칙을 종교적으로 따르려고 시도하여 프레임워크와 싸우는 복잡한 코드로 이어지는 일부 구현을 보았습니다.
+
+### Merging detached JPA entities built from Domain model
+
 ```java
-class Hold {
-    public static Hold placeHold(PlaceHold command) {
-        return new Hold(command);
+public HoldDto placeHold(Hold.PlaceHold command) {
+    ...
+
+    Hold.placeHold(command) // creates Hold domain model object
+            .then(holds::save) // converts to JPA entity to persist it in database
+            .then(eventPublisher::holdPlaced) // triggers HoldPlaced event
+
+    ...
+  );
+}
+```
+
+- The holds::save is a call on the Secondary port interface which will trigger the Secondary adapter implementation:
+
+### Code
+
+- 도메인 객체 생성에 필요한 커맨드를 해당 도메인 객체에 innner record로 정의
+
+```java
+public class Book {
+    private Book(AddBook addBook) {
+        this.id = new BookId(UUID.randomUUID());
+        this.inventoryNumber = addBook.barcode();
+        this.title = addBook.title();
+        this.isbn = addBook.isbn();
+        this.status = BookStatus.AVAILABLE;
     }
 
+
+    /**
+     * Command to add a new book
+     */
+    public record AddBook(Barcode barcode, String title, String isbn) {
+    }
+}
+```
+
+- dto#from(domainModel) factory method가 존재
+
+```java
+public static HoldDto from(Hold hold) {
+    return new HoldDto(
+            hold.getId().id().toString(),
+            hold.getOnBook().barcode(),
+            hold.getDateOfHold());
+}
+```
+
+- persistence entity와 domain model 분리
+
+```java
+package example.borrow.infrastructure.out.persistence;
+
+@Entity
+public class HoldEntity {
+    @Embedded
+    @AttributeOverride(name = "barcode", column = @Column(name = "bookBarcode"))
+    private Book.Barcode book;
+
+    @Enumerated(EnumType.STRING)
+    private HoldStatus status;
+
+    @Version
+    private Long version;
+
+    public Hold toDomain() {
+        if (this.status == HoldStatus.HOLDING) {
+            return Hold.placeHold(new Hold.PlaceHold(book, dateOfHold));
+        } else {
+            return null;
+        }
+    }
+
+    public static HoldEntity fromDomain(Hold hold) {
+        var entity = new HoldEntity();
+        entity.id = hold.getId().id();
+        entity.book = hold.getOnBook();
+        entity.dateOfHold = hold.getDateOfHold();
+        entity.status = HoldStatus.HOLDING;
+        entity.version = 0L;
+        return entity;
+    }
+}
+
+enum HoldStatus {
+    HOLDING, ACTIVE, COMPLETED
+}
+```
+- Adapter가 Jpa Repository Interface를 사용
+
+```java
+@SecondaryAdapter
+@Component
+@Transactional
+@RequiredArgsConstructor
+public class BookRepositoryAdapter implements BookRepository {
+
+    private final BookJpaRepository books;
+```
+
+- 도메인 객체를 fluent하게 사용하기 위한 헬퍼 함수
+
+```java
+class Hold {
     public Hold then(UnaryOperator<Hold> function) {
         return function.apply(this);
     }
 }
 ```
+
+### 전통적인 Hexagonal과 비교
+![tranditional-hexagonal.png](../images/tranditional-hexagonal.png)
+
+----
+
+```plantuml
+@startuml
+
+package infrastructure {
+    package rest {
+        class CirculationDeskController {
+            -circulationDesk : CirculationDesk
+        }
+    }
+
+    package persistence {
+        class BookEntity {
+        }
+        interface BookJpaRepository extends JpaRepository {
+        }
+        class BookRepositoryAdapter implements BookRepository {
+        }
+        class HoldEntity {
+        }
+        interface HoldJpaRepository extends JpaRepository {
+        }
+        class HoldRepositoryAdapter implements HoldRepository {
+        }
+    }
+}
+
+package application {
+    class CirculationDesk {
+        -books : BookRepository
+        -holds : HoldRepository
+        -eventPublisher : HoldEventPublisher
+    }
+    class HoldDto {
+    }
+}
+
+package domain {
+    class Book {
+    }
+    class BookPlacedOnHold {
+    }
+    interface BookRepository {
+    }
+    class Hold {
+    }
+    interface HoldEventPublisher {
+    }
+    interface HoldRepository {
+    }
+}
+
+infrastructure.rest.CirculationDeskController --> application.CirculationDesk : uses
+application.CirculationDesk --> domain.BookRepository : uses
+application.CirculationDesk --> domain.HoldRepository : uses
+application.CirculationDesk --> domain.HoldEventPublisher : uses
+domain.BookRepository <.. infrastructure.persistence.BookRepositoryAdapter : implements
+domain.HoldRepository <.. infrastructure.persistence.HoldRepositoryAdapter : implements
+infrastructure.persistence.BookRepositoryAdapter --> infrastructure.persistence.BookJpaRepository : uses
+infrastructure.persistence.HoldRepositoryAdapter --> infrastructure.persistence.HoldJpaRepository : uses
+
+@enduml
+```
+### issues
+
+- entity를 adapter에
+    - 이래서 단위 테스트가 순수해 졌음
+    - entity <-> model 어떻게 하나 ?
+    - lazy loading, dirty check ?
+    - optimistic locking은 ?
 
 ## 메모
 
