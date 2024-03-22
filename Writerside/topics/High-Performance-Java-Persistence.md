@@ -106,6 +106,32 @@ entityManager.persist(post);
 - unidirectional Set is still less efficient than the bidirectional @OneToMany association.
 
 ### 10.4 @ElementCollection
+- @ElementCollection is very similar to the unidirectional @OneToMany relationship.
+  - To represent collections of basic types (e.g. String, int, BigDecimal) or embeddable types, the @ElementCollection must be used instead.
 
+#### 10.4.1 @ElementCollection List
+- Using an @ElementCollection with a List is not very efficient because the association is considered to be a bag, in Hibernate terminology.
+  - A bag does not guarantee that elements are uniquely identifiable, hence Hibernate needs to delete and reinsert the elements associated with a given parent entity whenever a change occurs to the @ElementCollection List.
+
+#### 10.4.2 @ElementCollection Set
+- On the other hand, when using a Set, the @ElementCollection no longer behaves like a bag, and the generated SQL statements are going to be more efficient.
+
+### 10.5 @OneToOne
+- In JPA, the @OneToOne relationship can be either unidirectional or bidirectional.
+
+#### 10.5.1 Unidirectional @OneToOne
+
+#### 10.5.2 Bidirectional @OneToOne
+
+### 10.6 @ManyToMany
+
+#### 10.6.1 Unidirectional @ManyToMany List
+- For @ManyToMany associations, CascadeType.REMOVE does not make too much sense when both sides represent independent entities.
+
+#### 10.6.2 Unidirectional @ManyToMany Set
+
+#### 10.6.3 Bidirectional @ManyToMany
+
+#### 10.6.4 The @OneToMany alternative
 
 --- image path 변경
