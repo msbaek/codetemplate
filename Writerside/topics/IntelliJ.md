@@ -71,16 +71,21 @@
 - Locate Duplicates...
 
 ## UML
-- You can view your VCS local changes as a diagram. Select VCS | Uncommitted Changes| Show Local Changes as UML - `⌘⌥⇧D`
-- list up element in diagram -  `⌘F12`
-- When you click through classes in the graph, IntelliJ IDEA greys out classes that do not reside in the same package.
-- You can select the the Edge Creation mode button icon on the diagram toolbar to draw relationship links between elements in your graph. To delete the existing links, select the ones you don't need and press ⌫ IntelliJ IDEA will update the source code accordingly.
-- Show Implementations ⌘⌥B, Show Parents ⌘⌥P
+- VCS 변경을 다이어그램으로 보기 
+  - `VCS | Uncommitted Changes| Show Local Changes as UML`
+  - `⌘⌥⇧D`
+- 다이어그램의 요소들을 리스트업하기 - `⌘F12`
+- 수동으로 클래스들 간의 관계를 그릴 수 있음
+- layout
+  - `F5`: 현 구조에서 다시 그리기
+  - `⇧F5`: 자동 정렬
+- Show Implementations `⌘⌥B`, Show Parents `⌘⌥P`
+- 해당 소스로 가기 `⌘↓`
 - Analyze graph: 클래스들을 선택하고, 우클릭해서 Analyze graph
 - Measure diagram centrality
-  - You can use this action to identify the important nodes in the graph.
-  - In the diagram editor, right-click anywhere in the editor to open the context menu.
-  - From the context menu, select Analyze Graph | Measure Centrality.
+  - 중요한 노드 식별 자동으로 하기
+  - 우클릭 / `Analyze Graph | Measure Centrality`
+  
 ## Plugins
 
 - [IdeaVim - IntelliJ IDEs Plugin | Marketplace](https://plugins.jetbrains.com/plugin/164-ideavim)

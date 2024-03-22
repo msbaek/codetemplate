@@ -23,20 +23,26 @@ _ @ManyToMany mirrors a many-to-many table relationship.’
 ![hp-jp-10.3.png](hp-jp-10.3.png)
 
 ### 10.3 @OneToMany
+
 - @ManyToOne이 most natural mapping
 - @OneToMany can also mirror this database relationship, but only when being used as a bidirectional mapping
-- unidirectional @OneToMany association uses an additional junction table, which no longer fits the one-to-many table relationship semantics.
+- unidirectional @OneToMany association uses an additional junction table, which no longer fits the one-to-many table
+  relationship semantics.
 
 #### 10.3.1 Bidirectional @OneToMany
+
 - bidirectional @OneToMany association has a matching @ManyToOne child-side mapping
 
 ![hp-jp-10.4.png](hp-jp-10.4.png)
 
 - In a bidirectional association, only one side can control the underlying table relationship.
-- it is the child-side @ManyToOne association in charge of keeping the foreign key column value in sync with the in-memory Persistence Context
-- This is the reason why the bidirectional @OneToMany relationship must define the mappedBy attribute, indicating that it only mirrors the @ManyToOne child-side mapping
+- it is the child-side @ManyToOne association in charge of keeping the foreign key column value in sync with the
+  in-memory Persistence Context
+- This is the reason why the bidirectional @OneToMany relationship must define the mappedBy attribute, indicating that
+  it only mirrors the @ManyToOne child-side mapping
 - bidirectional association must always have both the parent-side and the child-side in sync.
 - To synchronize both ends, it is practical to provide parent-side helper methods that add/remove child entities.
+
 ```java
 public void addComment(PostComment comment) {
     comments.add(comment);
@@ -48,18 +54,58 @@ public void removeComment(PostComment comment) {
     comment.setPost(null);
 }
 ```
-- major advantages of using a bidirectional association 
-  - entity state transitions can be cascaded from the parent entity to its children.
-- In the following example, when persisting the parent Post entity, all the PostComment child entities are persisted as well.
+
+- major advantages of using a bidirectional association
+    - entity state transitions can be cascaded from the parent entity to its children.
+- In the following example, when persisting the parent Post entity, all the PostComment child entities are persisted as
+  well.
+
 ```java
 Post post = new Post("First post");
 post.addComment(new PostComment("My first review"));
 post.addComment(new PostComment("My second review"));
 entityManager.persist(post);
 ```
-- ‘When removing a comment from the parent-side collection:
-`post.removeComment(comment1);`
-- ‘The orphan removal attribute instructs Hibernate to generate a delete DML statement on the targeted child entity:
-`DELETE FROM post_comment WHERE id = 2’`
 
-  --- image path 변경
+- ‘When removing a comment from the parent-side collection:
+  `post.removeComment(comment1);`
+- ‘The orphan removal attribute instructs Hibernate to generate a delete DML statement on the targeted child entity:
+  `DELETE FROM post_comment WHERE id = 2’`
+
+#### 10.3.2 Unidirectional @OneToMany
+
+- need for helper methods and the mapping does not feature a mappedBy attribute either.
+- not map to a one-to-many table relationship’
+    - Hibernate uses a separate junction table to manage the association between a parent row and its child records.
+- joining three tables is less efficient than joining just two
+    - Because there are two foreign keys, there need to be two indexes (instead of one), so the index memory footprint
+      increases
+- problems
+    - all junction table rows associated with the parent entity are deleted, and then the remaining in-memory records
+      are added back again
+        - database has way more DML
+- Another problem is related to indexes
+
+#### 10.3.3 Ordered unidirectional @OneToMany
+- If the collection can store the index of every collection element, the unidirectional @OneToMany relationship may benefit for some element removal operations
+
+#### 10.3.4 @OneToMany with @JoinColumn
+- With the @JoinColumn, the @OneToMany association controls the child table foreign key, so there is no need for a junction table.
+- Bidirectional @OneToMany with @JoinColumn relationship
+  - The @OneToMany with @JoinColumn association can also be turned into a bidirectional relationship, but it requires instructing the child-side to avoid any insert and update synchronization:
+    ```java
+    @ManyToOne
+    @JoinColumn(name = "post_id", insertable = false, updatable = false)
+    private Post post;
+    ```
+    - The redundant update statements are generated for both the unidirectional and the bidirectional association, so the most efficient foreign key mapping is the @ManyToOne association.
+
+#### 10.3.5 Unidirectional @OneToMany Set
+- Set을 이용하기 위해 hashCode와 equals 메소드를 구현해야 함
+- To avoid using a secondary table, the @OneToMany mapping can use the @JoinColumn annotation.
+- unidirectional Set is still less efficient than the bidirectional @OneToMany association.
+
+### 10.4 @ElementCollection
+
+
+--- image path 변경
