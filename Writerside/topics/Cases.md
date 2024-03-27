@@ -195,10 +195,10 @@ d80da04 (tag: s_split_abstraction) add God, GodTest  [Myeongseok Baek]
 ### split by levels of abstraction - mercury
 
 - port를 구현한 adapter에서 loop를 돌면서
-  - 3개의 도메인 객체에 대해서
-    - 도메인 객체 생성
-    - save domain 객체
-  - 를 반복하고 있음
+    - 3개의 도메인 객체에 대해서
+        - 도메인 객체 생성
+        - save domain 객체
+    - 를 반복하고 있음
 - 객체를 모두 생성해서 Value Object로 담아서 저장하는 로직에 전달하여
 - 빵 구조가 나오도록 개선
 
@@ -360,10 +360,31 @@ bdd00d1 parrot - push members down(getSpeed)
 
 ### extract common part
 
+```
 8451c17 extract-common-parts - add required files
 33df5ff extract-common-parts - replate temp with query before refactoring
 d3f85da extract-common-parts - extract method for remove dup.(with keep original signature)
 cf65bf4 (HEAD -> main, extract-common-parts) extract-common-parts - Extract common part removing branch
+```
+
+### stream api를 loop를 활용해서 개선하기
+
+```
+6f03714 refactor-stream add required files
+d157346 refactor-stream add test
+7da692b refactor-stream apply test data builder
+d385a66 refactor-stream replace stream with loop
+67eb5b5 refactor-stream extract method - getItemOption
+0a73e43 refactor-stream extract method - remove temp, add return
+2c6280c refactor-stream extract method - enhance with findFirst
+42ddca2 refactor-stream extract method - inline temp variables
+4da312a refactor-stream extract method - extract method subTotal
+4257b12 refactor-stream extract method - enhance subTotal
+ab368ea refactor-stream refactor calculateTotalWeight with stream api
+f1d1bc8 refactor-stream extract delegate
+c387b7d refactor-stream safe delete
+e0db7fa refactor-stream change test to use delegate
+```
 
 ## 참고 사이트
 
