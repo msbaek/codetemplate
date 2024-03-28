@@ -368,23 +368,116 @@ cf65bf4 (HEAD -> main, extract-common-parts) extract-common-parts - Extract comm
 ```
 
 ### stream api를 loop를 활용해서 개선하기
+1. 최초 메소드
+- `6f03714 refactor-stream add required files`
 
+```java
+public class ConveyorRegistry {
+    /**
+     * @param itemOptions   검수 단계에서 측정된 실제 무게를 가져오기 위한 아이템 정보
+     * @param shippingItems 배송할 아이템 정보
+     * @return 전체 무게를 반환.
+     */
+    public Long calculateTotalWeight(final List<ItemOption> itemOptions, final List<ShippingItem> shippingItems) {
+        return shippingItems.stream()
+                .mapToLong(shippingItem -> {
+                    final Long itemId = shippingItem.getItemId();
+                    final Long qty = shippingItem.getQty();
+                    return itemOptions.stream()
+                            .filter(itemOption -> Objects.equals(itemOption.getId(), itemId))
+                            .findFirst()
+                            .map(ItemOption::getWeight)
+                            .orElse(0L) * qty;
+                })
+                .sum();
+    }
+}
 ```
-6f03714 refactor-stream add required files
-d157346 refactor-stream add test
-7da692b refactor-stream apply test data builder
-d385a66 refactor-stream replace stream with loop
-67eb5b5 refactor-stream extract method - getItemOption
-0a73e43 refactor-stream extract method - remove temp, add return
-2c6280c refactor-stream extract method - enhance with findFirst
-42ddca2 refactor-stream extract method - inline temp variables
-4da312a refactor-stream extract method - extract method subTotal
-4257b12 refactor-stream extract method - enhance subTotal
-ab368ea refactor-stream refactor calculateTotalWeight with stream api
-f1d1bc8 refactor-stream extract delegate
-c387b7d refactor-stream safe delete
-e0db7fa refactor-stream change test to use delegate
+
+2. Add Test using Copilot
+- `d157346 refactor-stream add test`
+![copilot-gen-unit-test.png](../images/copilot-gen-unit-test.png)
+
+```java
+class ConveyorRegistryTest {
+    @Test
+    public void testCalculateTotalWeight() {
+        ConveyorRegistry conveyorRegistry = new ConveyorRegistry();
+
+        List<ItemOption> itemOptions = Arrays.asList(
+                new ItemOption() {
+                    public Long getId() { return 1L; }
+                    public Long getWeight() { return 2L; }
+                },
+                new ItemOption() {
+                    public Long getId() { return 2L; }
+                    public Long getWeight() { return 3L; }
+                }
+        );
+
+        List<ShippingItem> shippingItems = Arrays.asList(
+                new ShippingItem() {
+                    public Long getItemId() { return 1L; }
+                    public Long getQty() { return 2L; }
+                },
+                new ShippingItem() {
+                    public Long getItemId() { return 2L; }
+                    public Long getQty() { return 3L; }
+                }
+        );
+
+        Long expectedTotalWeight = 2L*2L + 3L*3L;
+        Long actualTotalWeight = conveyorRegistry.calculateTotalWeight(itemOptions, shippingItems);
+
+        assertEquals(expectedTotalWeight, actualTotalWeight);
+    }
+}
 ```
+
+3. apply test data builder
+- `7da692b refactor-stream apply test data builder`
+- ![copilot-test-data-builder.png](../images/copilot-test-data-builder.png)
+
+4. Replace stream with loop
+- `d385a66 refactor-stream replace stream with loop`
+- ![refactor-stream-replace-stream-with-loop.png](../images/refactor-stream-replace-stream-with-loop.png)
+
+5. Extract method getItemOption
+- `67eb5b5 refactor-stream extract method - getItemOption`
+- ![refactor-stream-extract-method-getItemOption.png](../images/refactor-stream-extract-method-getItemOption.png)
+
+6. Remove temp, add return
+- `0a73e43 refactor-stream extract method - remove temp, add return`
+- ![refactor-stream-remove-temp-add-return.png](../images/refactor-stream-remove-temp-add-return.png)
+
+7. Replace with findFirst
+- `2c6280c refactor-stream extract method - enhance with findFirst`
+- ![refactor-stream-replace-with-findFirst.png](../images/refactor-stream-replace-with-findFirst.png)
+
+8. Inline temp with query
+- `42ddca2 refactor-stream extract method - inline temp variables`
+- ![refactor-stream-inline-temp.png](../images/refactor-stream-inline-temp.png)
+
+9. Extract method subTotal
+`4da312a refactor-stream extract method - extract method subTotal`
+- ![refactor-stream-extract-method-subTotal.png](../images/refactor-stream-extract-method-subTotal.png)
+
+10. Enhance subTotal
+`4257b12 refactor-stream extract method - enhance subTotal`
+- ![refactor-stream-enhance-subtotal.png](../images/refactor-stream-enhance-subtotal.png)
+
+11. Calculate total weight in stream
+- `ab368ea refactor-stream refactor calculateTotalWeight with stream api`
+- ![refactor-stream-calculate-total-in-stream.png](../images/refactor-stream-calculate-total-in-stream.png)
+
+12. Extract delegate ShippingWeightCalculatgr
+- `f1d1bc8 refactor-stream extract delegate`
+
+13. Safe delete
+- `c387b7d refactor-stream safe delete`
+
+14. Change test to use delegate
+- `e0db7fa refactor-stream change test to use delegate`
 
 ## 참고 사이트
 
