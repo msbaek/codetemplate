@@ -1,5 +1,30 @@
 # Techniques
 
+<!-- TOC -->
+
+* [Overall Refactoring](#overall-refactoring)
+    * [Tyding](#simle-tyding)
+    * [Refactoring Levels](#refactoring-levels)
+* [Naming](#naming)
+    * [규칙](#naming-rules)
+* [묵시적 의존성 명시화하기](#explicify-implicit-dependency)
+* [Repeated Switches](#repeated-switches)
+* [Lift up conditional](#lift-up-conditional)
+* [유사한 기능을 추가하는 절차](#add-similar-feature)
+* [loop is one thing - SRP](#loop-is-one-thing---srp)
+* [Split Phase](#split-phase)
+* [Split by Levels of Abstraction](#split-by-levels-of-abstraction)
+* [Split Unrelasted Complexity](#split-unrelasted-complexity)
+* [Imperative Shell / Functional Core Segregation](#imperative-shell--functional-core-segregation)
+* [combinational approval test](#combinational-approval-test)
+* [Approval Test를 위한 Printer](#approval-test-printer)
+* [TDD Refactoring](#TDD-Refactoring)
+* [Tips](#tips)
+    * [반드시 단순해야 하는 구문들](#Syntax-that-must-be-simple)
+    * [Compare with clipboard](#Compare-with-clipboard)
+
+<!-- TOC -->
+
 ## Overall Refactoring
 
 ### Tyding { id="simle-tyding" }
@@ -45,9 +70,10 @@
     - 처음에 지은 나쁜 이름을 계속 유지하면 다른 사람(2주 후의 나)이 이해하기 어렵다.
     - 커뮤니케이션하기 어려워진다
 - invoice → invocing
-  - 패키지명을 명사가 아니라 동사구로
-  - BC로 인해 invoicing에 있는 Customer는 InvoicingCustomer
-### 규칙
+    - 패키지명을 명사가 아니라 동사구로
+    - BC로 인해 invoicing에 있는 Customer는 InvoicingCustomer
+
+### 규칙 {id="naming-rules"}
 
 - factory method
     - from: 인자가 1개
@@ -63,7 +89,7 @@
     - canXXX: boolean 반환
     - validateXXX: exception 발생
 
-## 묵시적 의존성 명시화하기
+## 묵시적 의존성 명시화하기 { id="explicify-implicit-dependency" }
 
 - 전역 변수나 싱글톤을 메소드에서 사용하는 경우
 - 해당 변수를 파라미터로 추출해서 메소드 시그니처에 명시적으로 의존성이 보이도록 개선
@@ -97,7 +123,7 @@
 
 - [예제](Cases.md#lift-up-conditional)
 
-## 유사한 기능을 추가하는 절차
+## 유사한 기능을 추가하는 절차 { id="add-similar-feature" }
 
 1. 복붙
 2. Programming by difference
@@ -111,7 +137,7 @@
 - 반복문, 조건문 바디에서 2가지 이상을 일을하는 경우가 있음
 - 리팩터링에 방해가 됨
 
-## Split Phase
+## Split Phase { id="split-phase" }
 
 - from Refactoring 2nd ed.
 - 의도
@@ -180,11 +206,28 @@
 - CombinatorialApprovals.verifyAllCombinations이 이 메소드를 호출하도록
 
 ## Approval Test를 위한 Printer
+
 - [Feature/gms 2572 delta update of picking group #1255](https://github.com/HMInternational/gms-java-api/pull/1255/files#diff-62118102df5985db1fa24d98e3f674db22f15f050a5d13f6df8305c41a5d50ef)
 - ![before-after-approvaltest.png](../images/before-after-approvaltest.png)
+
+## TDD Refactoring { id="TDD-Refactoring" }
+
+- Test에 모든 로직을 우선 구현한 후에 리팩터링을 통해 적합한 구조를 만들기
+
+1. 모든 로직을 테스트에 구현
+2. AAA 형태의 테스트 코드에서 Act를 메소드로 추출
+3. Act 사용하는 의존성 객체가 있다면
+   3.1 `Introduce Parameter`를 통해 메소드의 파라미터로 추출
+   3.2 `Introduct Parameter Object`를 수행하여 파라미터를 객체(Application Service)로 추출
+    - 이렇게 하면 의존성을 갖는 객체들이 Application Service의 **생성자를 통해 전달되어 의존성 주입**이 가능해짐
+4. Act 사용하는 의존성 객체가 없다면 `Extract Delegate`를 통해 Application Service로 추출
+5. Application Service에서 `Slide Statements`를 통해 [빵구조](Terms.md#functional-core--imperative-shell) 확보
+6. Application Service에서 `Extract Method`를 통해 도메인 로직을 메소드로 추출
+7. 분리된 도메인 로직을 `Extract Delegate`, `Move Instance Method` 등을 통해 domain 계층으로 이동
+
 ## Tips
 
-### 반드시 단순해야 하는 구문들
+### 반드시 단순해야 하는 구문들 { id="Syntax-that-must-be-simple" }
 
 - 3항 연산자
 - 스트림 파이프 라인
