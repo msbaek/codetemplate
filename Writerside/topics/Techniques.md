@@ -219,11 +219,24 @@
 3. Act 사용하는 의존성 객체가 있다면
    3.1 `Introduce Parameter`를 통해 메소드의 파라미터로 추출
    3.2 `Introduct Parameter Object`를 수행하여 파라미터를 객체(Application Service)로 추출
+    - 이때 Application Service에 전달될 파라미터는 제외하고 파라미터 객체를 추출
     - 이렇게 하면 의존성을 갖는 객체들이 Application Service의 **생성자를 통해 전달되어 의존성 주입**이 가능해짐
+      3.3 `Move Instance Method` to ApplicationService
 4. Act 사용하는 의존성 객체가 없다면 `Extract Delegate`를 통해 Application Service로 추출
 5. Application Service에서 `Slide Statements`를 통해 [빵구조](Terms.md#functional-core--imperative-shell) 확보
 6. Application Service에서 `Extract Method`를 통해 도메인 로직을 메소드로 추출
 7. 분리된 도메인 로직을 `Extract Delegate`, `Move Instance Method` 등을 통해 domain 계층으로 이동
+
+```
+1b2a23b param-obj add required files
+a11959a param-obj inline methods
+1244683 param-obj extract method
+039261d param-obj introduct parameter
+68d4a5a param-obj Move Instance Method to ApplicationService
+3f77ce6 param-obj extract domain method
+35cdad8 param-obj replace record to class
+217bd61 param-obj extract domain service
+```
 
 ## Tips
 

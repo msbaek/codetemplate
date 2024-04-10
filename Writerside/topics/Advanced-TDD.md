@@ -219,7 +219,7 @@ public String getState () {
   }
   ```
   
-- STUBS: ADummy that returns Test Specific Values.
+- STUBS: A dummy that returns Test Specific Values.
   ```java
   public class RejectingAuthenticatorStub implements Authenticator {
     public Boolean authenticate (String username, String password) {

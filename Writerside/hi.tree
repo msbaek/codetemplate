@@ -21,6 +21,7 @@
         <toc-element topic="Techniques.md"/>
     </toc-element>
     <toc-element topic="TDD.md">
+        <toc-element topic="Goods-Collection.md"/>
         <toc-element topic="Overall-Application-Development-Process.md"/>
         <toc-element topic="Example-Book-Management.md"/>
         <toc-element topic="TDD-By-Example.md"/>
