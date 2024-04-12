@@ -48,6 +48,7 @@
     </toc-element>
     <toc-element topic="Books.md"/>
     <toc-element topic="Articles.md">
+        <toc-element topic="Vertical-Slice-Architecture.md"/>
         <toc-element topic="Branch-vs-Trunk-Based-Delivery.md"/>
         <toc-element topic="Advanced-TDD.md"/>
         <toc-element topic="GPT.md">
@@ -62,7 +63,10 @@
         </toc-element>
         <toc-element topic="Writerside.md"/>
     </toc-element>
-    <toc-element topic="Practices.md"/>
+    <toc-element topic="Practices.md">
+        <toc-element topic="Aggregate.md"/>
+        <toc-element topic="기능-구현-절차.md"/>
+    </toc-element>
     <toc-element topic="React.md">
         <toc-element topic="React-Tutorial-for-Java-Delopers.md"/>
     </toc-element>
