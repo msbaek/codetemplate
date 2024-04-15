@@ -9,7 +9,10 @@
     <toc-element topic="Default-topic.md"/>
     <toc-element topic="Architectures.md">
         <toc-element topic="Vertical-Slice-Architecture.md"/>
-        <toc-element topic="Spring-Modulith-with-DDD.md"/>
+        <toc-element topic="Spring-Modulith.md">
+            <toc-element topic="Spring-Modulith-with-DDD.md"/>
+            <toc-element topic="Test-Modulith-Using-ApplcationModuleTest.md"/>
+        </toc-element>
     </toc-element>
     <toc-element topic="Java.md">
         <toc-element topic="Collections.md"/>
