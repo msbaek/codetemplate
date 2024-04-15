@@ -50,4 +50,8 @@
         <description>Created after removal of "구현 사례" from TDD and Refactoring</description>
         <accepts>구현-사례.html</accepts>
     </rule>
+    <rule id="55e8bce4">
+        <description>Created after removal of "Modulith" from TDD and Refactoring</description>
+        <accepts>Modulith.html</accepts>
+    </rule>
 </rules>

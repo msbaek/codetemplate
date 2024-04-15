@@ -7,6 +7,10 @@
                  start-page="Default-topic.md">
 
     <toc-element topic="Default-topic.md"/>
+    <toc-element topic="Architectures.md">
+        <toc-element topic="Vertical-Slice-Architecture.md"/>
+        <toc-element topic="Spring-Modulith-with-DDD.md"/>
+    </toc-element>
     <toc-element topic="Java.md">
         <toc-element topic="Collections.md"/>
     </toc-element>
@@ -21,6 +25,7 @@
         <toc-element topic="Techniques.md"/>
     </toc-element>
     <toc-element topic="TDD.md">
+        <toc-element topic="Advanced-TDD.md"/>
         <toc-element topic="Goods-Collection.md"/>
         <toc-element topic="Overall-Application-Development-Process.md"/>
         <toc-element topic="Example-Book-Management.md"/>
@@ -45,23 +50,18 @@
     <toc-element topic="Tools.md">
         <toc-element topic="Astronvim.md"/>
         <toc-element topic="IntelliJ.md"/>
+        <toc-element topic="Writerside.md"/>
     </toc-element>
     <toc-element topic="Books.md"/>
+    <toc-element topic="Tidy-First.md">
+        <toc-element topic="Canon-TDD.md"/>
+        <toc-element topic="Mastering-Programming.md"/>
+    </toc-element>
     <toc-element topic="Articles.md">
-        <toc-element topic="Vertical-Slice-Architecture.md"/>
         <toc-element topic="Branch-vs-Trunk-Based-Delivery.md"/>
-        <toc-element topic="Advanced-TDD.md"/>
         <toc-element topic="GPT.md">
             <toc-element topic="MSA.md"/>
         </toc-element>
-        <toc-element topic="Tidy-First.md">
-            <toc-element topic="Canon-TDD.md"/>
-            <toc-element topic="Mastering-Programming.md"/>
-        </toc-element>
-        <toc-element topic="Modulith.md">
-            <toc-element topic="Spring-Modulith-with-DDD.md"/>
-        </toc-element>
-        <toc-element topic="Writerside.md"/>
     </toc-element>
     <toc-element topic="Practices.md">
         <toc-element topic="Aggregate.md"/>
