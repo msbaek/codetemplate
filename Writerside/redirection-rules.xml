@@ -54,4 +54,8 @@
         <description>Created after removal of "Modulith" from TDD and Refactoring</description>
         <accepts>Modulith.html</accepts>
     </rule>
+    <rule id="53e6246b">
+        <description>Created after removal of "First One, Then Many" from TDD and Refactoring</description>
+        <accepts>First-One-Then-Many.html</accepts>
+    </rule>
 </rules>
