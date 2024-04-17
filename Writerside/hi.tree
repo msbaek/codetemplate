@@ -57,6 +57,7 @@
     </toc-element>
     <toc-element topic="Books.md"/>
     <toc-element topic="Tidy-First.md">
+        <toc-element topic="First-One-Then-Many.md"/>
         <toc-element topic="Canon-TDD.md"/>
         <toc-element topic="Mastering-Programming.md"/>
     </toc-element>
