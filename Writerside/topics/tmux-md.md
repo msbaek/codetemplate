@@ -3,23 +3,62 @@
 ## my conf
 
 ```
+set -g default-terminal "screen-256color"
+
 unbind C-b
 set -g prefix C-a
 bind C-a send-prefix
 
+# split panes using | and -
+bind | split-window -h
+bind - split-window -v
+unbind '"'
+unbind %
+
 unbind r
 bind r source-file ~/.tmux.conf\; display-message "Config reloaded."
+
+# easily resizing tmux panes
+# not work. 어떤 키를 눌러야 하는지 모르겠음
+bind -r j resize-pane -D 5
+bind -r k resize-pane -U 5
+bind -r l resize-pane -R 5
+bind -r h resize-pane -L 5
+
+# maximize pane
+bind -r m resize-pane -Z
+
 set -g mouse on
 
-# List of plugins
+set-window-option -g mode-keys vi # use vi keys in buffer
+bind-key -T copy-mode-vi 'v' send -X begin-selection # start selecting text with "v"
+bind-key -T copy-mode-vi 'y' send -X copy-selection # copy text with "y"
+
+set-option -g status-position top
+
+unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode after dragging with mouse
+
+# tpm plugins
 set -g @plugin 'tmux-plugins/tpm'
-set -g @plugin 'tmux-plugins/tmux-sensible'
+
+# List of plugins
+set -g @plugin 'christoomey/vim-tmux-navigator' # for navigating panes and vim/nvim with Ctrl-hjkl
 set -g @plugin 'catppuccin/tmux'
-set -g @plugin 'christoomey/vim-tmux-navigator'
+# set -g @plugin 'jimeh/tmux-themepack' # to configure tmux th↓eme [jimeh/tmux-themepack: A pack of various Tmux themes.](https://github.com/jimeh/tmux-themepack)
+set -g @plugin 'tmux-plugins/tmux-resurrect' # persist tmux sessions after computer restart
+set -g @plugin 'tmux-plugins/tmux-continuum' # automatically saves sessions for you every 15 minutes
+
+# set -g @themepack 'powerline/default/cyan' # use this theme for tmux
+
+set -g @resurrect-capture-pane-contents 'on' # allow tmux-ressurect to capture pane contents
+set -g @continuum-restore 'on' # enable tmux-continuum functionality
+
+run '~/.tmux/plugins/tpm/tpm'
+# --
 
 set -g @catppuccin_window_left_separator "█"
 set -g @catppuccin_window_right_separator "█ "
-set -g @catppuccin_window_number_position "right"
+st -g @catppuccin_window_number_position "right"
 set -g @catppuccin_window_middle_separator "  █"
 
 set -g @catppuccin_window_default_fill "number"
@@ -38,24 +77,8 @@ set -g @plugin 'tmux-plugins/tmux-continuum'
 
 set -g @continuum-restore 'on'
 set -g @continuum-boot 'on'
-
-setw -g mode-keys vi # use vi keys in buffer
-
-bind-key h select-pane -L 
-bind-key j select-pane -D
-bind-key k select-pane -U
-bind-key l select-pane -R
-
-# split panes using | and -
-bind | split-window -h
-bind - split-window -v
-unbind '"'
-unbind %
-
-set-option -g status-position top
-
-run '~/.tmux/plugins/tpm/tpm'
 ```
+
 ## commands
 
 - [Tmux Cheat Sheet & Quick Reference | Session, window, pane and more](https://tmuxcheatsheet.com/#)
@@ -112,13 +135,15 @@ run '~/.tmux/plugins/tpm/tpm'
 
 ### Copy Mode
 
+- scroll하면서 텍스트를 선택 복붙할 때 유용
+- copy mode가 실행 중이면 우상단에 [0/280] 등이 보임
+
 | 설명            | 명령       |
 | --------------- | ---------- |
 | Enter copy mode | leader + [ |
-| quit mode       | q          |
-| start selection | sp         |
-| Clear selection | Esc        |
-| Copy selection  | Enter      |
+| begin selection | v, V       |
+| Copy selection  | y          |
+| quit mode       | C-c        |
 
 ### Misc
 
