@@ -163,6 +163,8 @@ set -g @continuum-boot 'on'
 
 ## References
 
+### [How To Use and Configure Tmux Alongside Neovim](https://www.josean.com/posts/tmux-setup)
+
 ### [Ep.1 Tmux will SKYROCKET your productivity - here’s how](https://www.youtube.com/watch?v=niuOc02Rvrc)
 
 ### [Ep.2 Making Tmux Better AND Beautiful -- here’s how](https://www.youtube.com/watch?v=jaI3Hcw-ZaA)

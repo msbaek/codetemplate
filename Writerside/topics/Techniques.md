@@ -22,6 +22,7 @@
 5. application에 있는 로직을 최대한 domain logic으로(discover domain service and value object - first class collection,
    paremterized object, field of entity) ← 충분히 연습이 되었다면
 6. trimming ← 충분히 연습이 되었다면
+7. 메소드 추출이 등이 잘 못되어 이해하기 더 어렵다면 one pile로 합치고 1번부터 진행
 
 ### Refactoring Levels
 
