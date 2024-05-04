@@ -53,6 +53,7 @@
     <toc-element topic="Tools.md">
         <toc-element topic="tmux-md.md"/>
         <toc-element topic="Astronvim.md"/>
+        <toc-element topic="alacritty.md"/>
         <toc-element topic="IntelliJ.md"/>
         <toc-element topic="Writerside.md"/>
     </toc-element>
