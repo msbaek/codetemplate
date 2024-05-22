@@ -7,12 +7,12 @@
 - [tyding](Techniques.md#simle-tyding)
 
 - 메소드 추출에서 중요한 점
-    1. 의도를 나타내는 이름을 붙일 수 있나 ?
-        - 좋을 이름을 부여할 수 없다면 다음에 추출해야
-    2. 함께 추출할 코드가 있다면 함께 추출
-    3. [Composed Method](https://github.com/msbaek/memo/blob/master/refactoring-tech/composed_method.md), [SLAP](https://github.com/msbaek/memo/blob/master/refactoring-tech/composed_method.md#slapsingle-level-of-abstraction-principle)
-       를 지향하는 방향으로 메소드 추출
-        - 가독성, 유지보수성
+  1. 의도를 나타내는 이름을 붙일 수 있나 ?
+     - 좋을 이름을 부여할 수 없다면 다음에 추출해야
+  2. 함께 추출할 코드가 있다면 함께 추출
+  3. [Composed Method](https://github.com/msbaek/memo/blob/master/refactoring-tech/composed_method.md), [SLAP](https://github.com/msbaek/memo/blob/master/refactoring-tech/composed_method.md#slapsingle-level-of-abstraction-principle)
+     를 지향하는 방향으로 메소드 추출
+     - 가독성, 유지보수성
 
 ## Remove Tagging Variable
 
@@ -22,8 +22,8 @@
 - f1은 a,b,c 블록으로 구성됨
 - b를 약간 변형하여 b'으로 변경해야 하는 요구사항
 - 2가지 쉬운 방법이 존재
-    1. f1에 boolean 매개변수를 전달해서 분리를 통해 b, b'을 실행
-    2. f1을 복붙해서 f2를 만들고 f2에서는 b 대신 b'을 실행
+  1. f1에 boolean 매개변수를 전달해서 분리를 통해 b, b'을 실행
+  2. f1을 복붙해서 f2를 만들고 f2에서는 b 대신 b'을 실행
 - 2가지 방법 모두 나쁜 방법
 
 ## 전역변수에 대한 의존성 표현하기
@@ -35,7 +35,7 @@
 
 ## Guard Clause - Early Return
 
-- [Guard (computer science)](https://en.wikipedia.org/wiki/Guard_(computer_science))
+- [Guard (computer science)](<https://en.wikipedia.org/wiki/Guard_(computer_science)>)
 - [Replace Nested Conditional with Guard Clauses](https://refactoring.com/catalog/replaceNestedConditionalWithGuardClauses.html)
 -
 
@@ -195,10 +195,10 @@ d80da04 (tag: s_split_abstraction) add God, GodTest  [Myeongseok Baek]
 ### split by levels of abstraction - mercury
 
 - port를 구현한 adapter에서 loop를 돌면서
-    - 3개의 도메인 객체에 대해서
-        - 도메인 객체 생성
-        - save domain 객체
-    - 를 반복하고 있음
+  - 3개의 도메인 객체에 대해서
+    - 도메인 객체 생성
+    - save domain 객체
+  - 를 반복하고 있음
 - 객체를 모두 생성해서 Value Object로 담아서 저장하는 로직에 전달하여
 - 빵 구조가 나오도록 개선
 
@@ -253,10 +253,10 @@ a6f1e1c add StockCheckPort
 ```
 
 - Parameter Object가 적합 한 경우
-    1. 일련의 상태에 대해서 동작하는 기능들이 있을 때
-    2. 일련의 의존성 객체들을 사용하는 기능이 있을 때
+  1. 일련의 상태에 대해서 동작하는 기능들이 있을 때
+  2. 일련의 의존성 객체들을 사용하는 기능이 있을 때
 
-### valuable-parameter-object        38abf79 move instance method to value object
+### valuable-parameter-object 38abf79 move instance method to value object
 
 ```
 38abf79 (HEAD -> valuable-parameter-object) move instance method to value object
@@ -295,10 +295,10 @@ e14b4be add class for extract value object
 - Using primitives for everything is certainly a bad practice. This leads to poor readability, validation, and
   abstraction.
 - Solutions
-    - Replace the data value with the object if the primitive fields logically belong together.
-    - ‘Introduce a parameter object’ to represent the data and clean up the code base.
-    - ‘Preserve the whole object’ when its state is needed together. Avoid extracting small parts of objects to pass
-      around.
+  - Replace the data value with the object if the primitive fields logically belong together.
+  - ‘Introduce a parameter object’ to represent the data and clean up the code base.
+  - ‘Preserve the whole object’ when its state is needed together. Avoid extracting small parts of objects to pass
+    around.
 - [Understanding Code Smells and How to Avoid Them | by typo | Typo blog | Jan, 2024 | Medium](https://medium.com/beyond-the-code-by-typo/understanding-code-smells-and-how-to-avoid-them-7ea52c295734)
 - [From Primitive Obsession to Domain Modelling](https://blog.ploeh.dk/2015/01/19/from-primitive-obsession-to-domain-modelling/)
 
@@ -360,6 +360,16 @@ bdd00d1 parrot - push members down(getSpeed)
 1feaefe parrot - make it work. remove unnecessary field, parameter
 0fa0889 parrot - find usage, push members down, make it work
 2fa8836 (HEAD -> main, parrot) parrot - find usage, push members down, make it work for isNailed
+```
+
+### polymorhic enum
+
+```
+b723c5a polymorhic-enum: add required files
+a174dcb polymorhic-enum: extract method to move
+6af490d polymorhic-enum: extract parameter to prepare move method
+987db3a polymorhic-enum: move method
+cd45eb1 polymorhic-enum: push members down manually(because enum is final)
 ```
 
 ### extract common part

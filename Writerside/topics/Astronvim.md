@@ -139,3 +139,10 @@
 
 :TodoQuickFix
 :colorscheme = tokyonight
+
+## git
+- lazy-git: [leader + g + g]
+- commit
+  - [leader + e]로 Expore로 이동
+  - '<', '>'로 git 탭으로 이동
+  - ? 누르면 help
