@@ -362,6 +362,10 @@ bdd00d1 parrot - push members down(getSpeed)
 2fa8836 (HEAD -> main, parrot) parrot - find usage, push members down, make it work for isNailed
 ```
 
+[Power Up Your Java OO Design Skills | Parrot Refactoring Kata](https://www.youtube.com/watch?v=7IT6c8wwHs4&t=594s)
+
+- type code에 의존하는 static factory method를 enum으로 이동
+
 ### polymorhic enum
 
 ```
@@ -527,6 +531,14 @@ class ConveyorRegistryTest {
 14. Change test to use delegate
 
 - `e0db7fa refactor-stream change test to use delegate`
+
+## Move Method할 때 의존성 제거하기
+
+- 메소드 내에서 필드 변수를 사용하면 move methodg하면 this가 따라나감
+- 필드 변수를 parameter로 추출하고 move method하면 해결됨
+- 혹은 move method를 하기 전에 extract method를 하고 move method를 해야 할 수도 있음
+  - type code로 메소드를 이동하는 경우 본래 메소드가 type code로 추출된 메소드를 호출하도록 하기 위해
+  - 그래야 클라이언트 코드의 변경이 없음
 
 ## 참고 사이트
 
