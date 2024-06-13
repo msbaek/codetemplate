@@ -134,7 +134,7 @@ class AuthControllerTest {
     @Test
     void signIn_successfully() throws Exception {
         // given
-        AuthController.SignInRequest request = new AuthController.SignInRequest("hmadmin", "gkdlfn1");
+        AuthController.SignInRequest request = new AuthController.SignInRequest("admin", "pwd");
 
         // when
         mockMvc.perform(post("/api/auth/signin")
@@ -165,7 +165,7 @@ class AuthControllerTest {
 @Test
 void signIn_failed() throws Exception {
     // given
-    AuthController.SignInRequest request = new AuthController.SignInRequest("hmadmin", "wrong_pwd");
+    AuthController.SignInRequest request = new AuthController.SignInRequest("admin", "wrong_pwd");
 
     // when
     mockMvc.perform(post("/api/auth/signin")
@@ -188,7 +188,7 @@ void signIn_failed() throws Exception {
 @DisplayName("로그인 시도를 요청하면 관련 로그를 쌓는다")
 @Test
 void attempt_login() throws Exception {
-    AuthController.AttemptLoginRequest request = new AuthController.AttemptLoginRequest("hmadmin",true);
+    AuthController.AttemptLoginRequest request = new AuthController.AttemptLoginRequest("admin",true);
     performAndVerify("/api/auth/attempt-login", objectMapper.writeValueAsString(request), status().isOk(), true, request.userId());
 }
 ```
@@ -231,7 +231,7 @@ class LoginAttemptServiceTest {
   @Test
   void attempt_login_success() {
     // given
-    String username = "hmadmin";
+    String username = "admin";
     boolean success = true;
 
     // when
@@ -300,7 +300,7 @@ public class LoginAttemptMemoryImpl implements LoginAttemptPort {
 @Test
 void attempt_login_failed() {
     // given
-    String username = "hmadmin";
+    String username = "admin";
     boolean success = false;
 
     // when
