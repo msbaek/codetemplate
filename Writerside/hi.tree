@@ -31,6 +31,7 @@
         <toc-element topic="Advanced-TDD.md"/>
         <toc-element topic="Goods-Collection.md"/>
         <toc-element topic="Overall-Application-Development-Process.md"/>
+        <toc-element topic="Outside-In-TDD.md"/>
         <toc-element topic="Example-Book-Management.md"/>
         <toc-element topic="TDD-By-Example.md"/>
         <toc-element topic="Usage First Design in TDD.md"/>
