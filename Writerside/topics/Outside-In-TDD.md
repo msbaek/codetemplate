@@ -100,7 +100,7 @@ loginAttemptService.attemptLogin(MECURY, request.username, success);
 ### 1.2 모듈의 엔드포인트에 대한 E2E 테스트 작성(AuthControllerTest)
 
 - class의 public method를 추가할 때마다 테스트를 추가하는 것이 아님
-  - 이러한 개발의 편의를 위해 추가하는 테스트는 단위 테스트라기 보다 Developer Test, Programmer Test가 더 적합한 이름임
+  - 이러한 개발의 편의를 위해 추가하는 테스트는 단위 테스트라기 보다 Developer Test, Programmer Test가 더 적합한 이름임([TDD Revisited - Ian Cooper - NDC Porto 2023](https://www.youtube.com/watch?v=IN9lftH0cJc))
   - developer test는 구현 후에 의미가 없어지면 삭제할 수도 있음
   - 이런 테스트들은 구현에 커플링되어 리팩터링 등으로 행위 변경 없이 구조만 변경되더라도 깨지는 경우가 빈번하게 발생함
 
