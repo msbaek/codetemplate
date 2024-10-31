@@ -163,8 +163,6 @@ p10k configure
 - exa
     - `exa -l -a -s modified --git`
     - `exa -D -1 -l`
-- fig
-- figlet
 - gh
     - GitHub on the command line
 - [hammerspoon](https://www.hammerspoon.org/)
@@ -235,6 +233,7 @@ p10k configure
     - `fzf` 설치 후 [fzf-Integration](https://github.com/phiresky/ripgrep-all/wiki/fzf-Integration)
         - `rga-fzf data` # search data in all files. 파일 간 이동 가능
 - sloth
+- tldr
 - tokyo-cabinet
 - tree
 - truncate
@@ -347,12 +346,6 @@ p10k configure
 - Tab Switcher: 전체 탭 목록을 보여줌. 검색 가능
 - Tab to Window/Popup: 현재 탭을 별도의 윈도우로
 
-## Fig
-
-- autocomplete
-- scripts
-- servers
-
 ## AstroNvim
 
 - 설치
@@ -362,7 +355,7 @@ p10k configure
 - Todos
 - find
 
-## marp
+## [Slidev](https://sli.dev/)
 
 ## Things
 

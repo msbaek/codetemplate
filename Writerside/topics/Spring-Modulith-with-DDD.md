@@ -1198,3 +1198,7 @@ class Book {
     - STANDALONE(default): Runs the current module only.
     - DIRECT_DEPENDENCIES: Runs the current module as well as all modules the current one directly depends on.
     - ALL_DEPENDENCIES: Runs the current module and the entire tree of modules depended on.
+
+## Securing Modular Monolith with OAuth2 and Spring Security
+
+- [Securing Modular Monolith with OAuth2 and Spring Security | by Abhinav Sonkar | ITNEXT](https://itnext.io/securing-modular-monolith-with-oauth2-and-spring-security-43f2504c4e2e)

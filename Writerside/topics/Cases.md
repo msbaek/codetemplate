@@ -2,6 +2,20 @@
 
 - [msbaek/refactoring-cases](https://github.com/msbaek/refactoring-cases): 리팩터링 케이스 소스 리파지토리
 
+## refactoring 순서 
+
+```
+8662a54 add required file  [Myeongseok Baek]
+debfd5a r invert-if  [Myeongseok Baek]
+35f7c08 r introduce variable  [Myeongseok Baek]
+504fd1d r extract method  [Myeongseok Baek]
+928232c r inline variable  [Myeongseok Baek]
+0d8fa1a (HEAD -> main, refactor-from-inner) r extract method  [Myeongseok Baek]
+```
+
+- test는 most outer -> inner
+- refactoring은 most inner -> outer
+
 ## 메소드를 추출하기 전까지의 개발 과정
 
 - [tyding](Techniques.md#simle-tyding)
@@ -276,6 +290,26 @@ e14b4be add class for extract value object
 09350f8 (HEAD -> first-class-collection) move instance method
 1d87c29 introduce parameter object
 938fd64 add UserCart
+```
+
+### first-class-collection-for-double-loop
+
+- replace stream api chain with loop, inline methods 등은 one pile임
+
+```
+a433b9a double-stream-collection add required files
+1837c9f Replace Stream API chain with loop
+998789b remove mutation(accumulative variable)
+a521184 extract method and rename it
+a1a725d one pile. inline methods
+3772c96 introduce parameter object
+92beb6f move method to parameter object
+597c68e extract variable and slide statement
+24aff90 Collapse loop with stream 'collect'
+754c1ba extract method toward composed method
+3933a1f extract factory method, make it static, move to ...
+0dab02a extract methods
+b821ebc (HEAD -> double-stream-first-class-collection) Collapse loop with stream 'collect'
 ```
 
 ### entity-fields-to-value-object
