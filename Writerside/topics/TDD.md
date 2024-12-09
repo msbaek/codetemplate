@@ -61,13 +61,13 @@ from https://martinfowler.com/bliki/TestDrivenDevelopment.html
 
 ## 단위 테스트와 개발자 테스트
 
-### 단위 테스트(sociable)
+### 개발자 / 프로그래머 테스트(sociable)
 
 - 서로 격리된(isolated) 테스트로서 사용자에게 가치를 제공하는 행위에 대한 것임(어떤 클래스의 메소드에 대한 것이 아님)
 - 모듈의 단일진입점(single entry point)에 대한 테스트
 - 시스템의 행위가 어떤 것인지에 대한 이야기여야
 
-### 개발자 테스트(solitary)
+### 단위 테스트(solitary)
 
 - 단위 테스트를 한번에 구현하기 어려워서 개발을 용이하게 하기 위한 테스트
 - mock등 사용 가능
