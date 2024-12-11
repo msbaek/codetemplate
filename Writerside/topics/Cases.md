@@ -2,6 +2,41 @@
 
 - [msbaek/refactoring-cases](https://github.com/msbaek/refactoring-cases): 리팩터링 케이스 소스 리파지토리
 
+## domain driven refactoring
+
+- 도메인 모델을 향해서 트랜잭션 스크립트 에서 시작해서 도메인 모델로 리팩토링
+    - 나는 새로운 프로젝트를 만들어 본 경험 보다는 브라운 필드 프로젝트 너무나 익숙하다
+    - 그래서 설계 보다는 리팩토링이 편안하다 나의 개발 하는 방법 절차
+    - 프로시저럴 로직이 등장할 때, 첫 번째 접근 방식은 긴 메서드를 일련의 작은 메서드들로 분리 - composed method
+    - 이후 로직을 분리하는 방법
+      - feature envy, abstraction layer, unrelated complexity
+- 빵속빵이 잘 분리 되지 않는 상황에서 빵과 속을 묶어서 도메인 서비스로 분리.
+    - 그러면 애플리케이션 서비스는 도메인 서비스와 협업 하게 된다.
+- comment로 분리된 블록 추출
+    - 최종 변수를 얻기 위한 중간 변수들(쿼리) 인라인 후 추출
+- 설계를 만드는 리팩터링 튀어오르는 설계(emergent design) -> 진화하는 아키텍처(evolutionary architecture)
+- 생성자에서 받아서 설정 가능한 속성에 대해서는 setter를 제거하여 setter를 최소화
+    - 혹은 private으로
+- 컬렉션에 대한 getter는 readonly collection을 반환하도록 변경
+- application service를 빵속빵(트랜잭션 스크립트)으로 만들고 속은 유닛 테스트 가능하다고
+- undo refactoring(inline):
+  - composed method가 더 이상 적절하지 않은 경우를 다룰 때
+  - 메소드들 간의 복잡도나 크기의 불균형이 발생했을 때
+  - 리팩토링은 되돌릴 수 있는(reversible) 과정이어야 함
+
+```
+0f8ea52 f add required file 
+20c1f03 r extract methods towards composed method 
+c98b8b7 r inline variables 
+8db764c r extract delegate(abtraction layer) 
+8d9fa9a r make static(expirationDate) 
+3d51a46 r move method(feature envy) 
+7573824 r inline extracted 
+7adb3b8 r extract method again assignOffer 
+d5f2d20 r move method and reduce field scope 
+e0fc353 r reduce parameter scope and name 
+```
+
 ## refactoring 순서 
 
 ```
