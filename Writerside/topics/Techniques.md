@@ -8,15 +8,16 @@
   - 제일 먼저 이렇게 하는 이유
     - 구현을 완료해봐야 **문제를 정확히 이해**하고, 사전에 **예측하기 어려운 이슈를 발견**할 수 있음
 
-1. Reorder - slide statements
+- 코드 품질에서 가장 중요한 것: 가독성, 향후 변경 가능성
+  - 리팩터링의 가장 기본적인 목표
+  - 이를 위해 Composed Method Pattern을 지향 
 
+0. One Pile if necessary
+1. Reorder - slide statements
    - reading / cohesion order
    - `Move declaration of 'xxx' closer to usages`
-
 2. Chunk Statements
-
    - 관련된 코드 블록을 그룹핑(빈 라인을 삽입)
-
 3. Explaining Comment ← 필수1
 4. Explaining Variable / Method towards Composed Method ← 필수2(**좋은 이름을 붙일 수 있으면**)
 5. application에 있는 로직을 최대한 domain logic으로(discover domain service and value object - first class collection,
@@ -123,9 +124,8 @@
   - 서로 다른 두 가지를 다루는 코드가 있을 때 이를 별도의 모듈로 분리
   - 이렇게 분리하면 변경이 필요할 때 두 가지 주제를 따로 처리할 수 있고 두 가지를 머릿속에 함께 담을 필요가 없기 때문임
 - ## 절차
-
-        1. Extract Method
-           ![img_2.png](../../images/split_phase_1.png)
+  - 1. Extract Method
+    ![img_2.png](../images/split_phase_1.png)
 
   - 2. Introduce intermediate data structure that will communicate between the two phases
        ![img_3.png](../images/split_phase_2.png)

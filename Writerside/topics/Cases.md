@@ -37,16 +37,19 @@ d5f2d20 r move method and reduce field scope
 e0fc353 r reduce parameter scope and name 
 ```
 
-## refactoring 순서 
+## refactor-from-inner - refactoring 순서 
 
-```
-8662a54 add required file  [Myeongseok Baek]
-debfd5a r invert-if  [Myeongseok Baek]
-35f7c08 r introduce variable  [Myeongseok Baek]
-504fd1d r extract method  [Myeongseok Baek]
-928232c r inline variable  [Myeongseok Baek]
-0d8fa1a (HEAD -> main, refactor-from-inner) r extract method  [Myeongseok Baek]
-```
+- 8662a54 add required file  [Myeongseok Baek]
+- debfd5a r invert-if  [Myeongseok Baek]
+![image_10.png](image_10.png)
+- 35f7c08 r introduce variable  [Myeongseok Baek]
+![image_11.png](image_11.png)
+- 504fd1d r extract method  [Myeongseok Baek]
+![image_12.png](image_12.png)
+- 928232c r inline variable  [Myeongseok Baek]
+![image_13.png](image_13.png)
+- 0d8fa1a (HEAD -> main, refactor-from-inner) r extract method  [Myeongseok Baek]
+![image_14.png](image_14.png)
 
 - test는 most outer -> inner
 - refactoring은 most inner -> outer
