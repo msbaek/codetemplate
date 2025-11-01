@@ -4,15 +4,6 @@
 
 ## THE THREE LAWS OF TEST DRIVEN DEVELOPMENT
 
-### ARBITRARY DISCIPLINE
-
-- Like a surgeon scrubbing for surgery
-- Like a pilot following a checklist
-
-### THE FIRST LAW
-
-- You are not allowed to write any production code until you have written a unit test that fails due to its absence.
-
 ### THE SECOND LAW
 
 - You are not allowed to write more of a unit test than is sufficient to fail, and not compiling is failing.
